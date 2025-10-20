@@ -19,7 +19,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Get keys down
+        MovePlayer();
+        RotateSprite(); 
+    }
+
+    void MovePlayer()
+    {
+        //Move the player
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -29,27 +35,10 @@ public class PlayerController : MonoBehaviour
         if (input.sqrMagnitude > 1f) input.Normalize(); // no √2 boost on diagonals
 
         rb.linearVelocity = input * speed; // constant speed in any direction
-
-        //Keep in bounds
-        if (transform.position.x >= 50f)
-        {
-            transform.position = new Vector3(50 , transform.position.y , 0); 
-        }
-        if (transform.position.x <= -50f)
-        {
-            transform.position = new Vector3(-50 , transform.position.y , 0); 
-        }
-
-        if (transform.position.y >= 150f)
-        {
-            transform.position = new Vector3(transform.position.x , 150 , 0); 
-        }
-
-        if (transform.position.y <= -150f)
-        {
-            transform.position = new Vector3(transform.position.x, -150, 0);
-        }
-        
+    }
+    
+    void RotateSprite()
+    {
         // --- Mirar hacia el mouse ---
         Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 toMouse = (mouseWorld - transform.position);
@@ -61,4 +50,5 @@ public class PlayerController : MonoBehaviour
 
         rb.MoveRotation(angleDeg + spriteOffset);
     }
+    
 }
