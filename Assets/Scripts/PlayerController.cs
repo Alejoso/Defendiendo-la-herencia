@@ -10,23 +10,24 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rb;
     Camera cam;
-    public float lookingDirection;
+    private float lookingDirection;
 
+    //Health and damage related things
     [SerializeField] private Slider healthBar;
 
     [SerializeField] private float currentHealth;
     [SerializeField] private float maxHealth;
 
-    private bool takeDamage;
-    [SerializeField] private bool inmmunityFrame;
-    [SerializeField] private float inmmunityFrameTimer;
+    private bool inmmunityFrame;
+    private float inmmunityFrameTimer = 0.67f;
 
 
     //Shooting mecanic variables
     public GameObject bullet; 
-    public bool canShoot = true;
-    public float shootingTimer;
-    public float timeBetweenShooting; 
+    private bool canShoot = true;
+    private float shootingTimer;
+    [SerializeField] private float timeBetweenShooting;
+    [SerializeField] private GameObject bulletSpawn; 
 
 
     void Awake()
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour
         //Set uo variables
         currentHealth = maxHealth;
         healthBar.value = currentHealth / maxHealth; 
-        takeDamage = false; 
 
     }
 
@@ -50,15 +50,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        if (takeDamage && inmmunityFrame == false)
-        {
-            takeDamage = false;
-            inmmunityFrame = true; 
-            TakeDamage(10f);
-        }
-    }
 
     void MovePlayer()
     {
@@ -83,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         // Ajusta este offset según cómo esté dibujado tu sprite:
         // si "mira" hacia ARRIBA en el arte, usa -90f; si mira a la DERECHA, usa 0f.
-        float spriteOffset = -90f;
+        float spriteOffset = 90f;
 
         rb.MoveRotation(lookingDirection + spriteOffset);
 
@@ -105,15 +96,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0) && canShoot)
         {
             canShoot = false;
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity);
         }
     }
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !inmmunityFrame)
         {
-            takeDamage = true;
+            inmmunityFrame = true;
+            TakeDamage(10f); 
         }
     }
 

@@ -4776,7 +4776,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4955,6 +4955,7 @@ MonoBehaviour:
   currentWave: 0
   minSpawnDistance: 14
   maxSpawnDistance: 17
+  playerLocation: 
 --- !u!1 &902159254
 GameObject:
   m_ObjectHideFlags: 0
@@ -5145,7 +5146,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 105
+  m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!114 &927871789
 MonoBehaviour:
@@ -5172,7 +5173,7 @@ GameObject:
   - component: {fileID: 1204719061}
   - component: {fileID: 1204719064}
   - component: {fileID: 1204719065}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5249,7 +5250,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 200
   m_Sprite: {fileID: 1218046081935710299, guid: ead803932f1771a45ad54300d52e598a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5273,7 +5274,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1319330535}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &1204719064
@@ -5289,16 +5291,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  lookingDirection: 0
   healthBar: {fileID: 902159256}
   currentHealth: 0
   maxHealth: 100
-  inmmunityFrame: 0
-  inmmunityFrameTimer: 3
   bullet: {fileID: 3566626696241338444, guid: 6eef905b71217294287fa37477c9472e, type: 3}
-  canShoot: 1
-  shootingTimer: 0
   timeBetweenShooting: 0.2
+  bulletSpawn: {fileID: 1319330534}
 --- !u!58 &1204719065
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5335,6 +5333,37 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.25}
   m_Radius: 0.48
+--- !u!1 &1319330534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1319330535}
+  m_Layer: 6
+  m_Name: BulletSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1319330535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319330534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.681, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1204719063}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1580327045
 GameObject:
   m_ObjectHideFlags: 0

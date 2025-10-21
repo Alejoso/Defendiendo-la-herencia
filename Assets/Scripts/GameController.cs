@@ -17,7 +17,11 @@ public class GameController : MonoBehaviour
     //Spawn variables
     private Camera cam;
     [SerializeField] private float minSpawnDistance;
-    [SerializeField] private float maxSpawnDistance; 
+    [SerializeField] private float maxSpawnDistance;
+
+
+    //See where the player is positioned
+    [SerializeField] private string playerLocation; 
     void Awake()
     {
         cam = Camera.main;
@@ -29,6 +33,7 @@ public class GameController : MonoBehaviour
         currentWave = 1;
         WaveSpawner(currentWave);
         canSpawnWave = true;
+        playerLocation = "Spawn"; 
 
     }
 
@@ -61,7 +66,7 @@ public class GameController : MonoBehaviour
 
         canSpawnWave = true;
     }
-    
+
     //Generate enemies on a circle around the player
     Vector3 GenerateRandomEnemySpawn()
     {
@@ -71,11 +76,16 @@ public class GameController : MonoBehaviour
 
         //Calculate the circular spawn position between those boundaries
         Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-        
+
         //Get the random spawn position
         Vector3 cameraPosition = cam.transform.position;
         Vector3 spawnPosition = new Vector3(cameraPosition.x + offset.x, cameraPosition.y + offset.y, 0);
 
-        return spawnPosition; 
+        return spawnPosition;
+    }
+    
+    public void ChangePlayerLocation(string newPlayerLocation)
+    {
+        playerLocation = newPlayerLocation; 
     }
 }
