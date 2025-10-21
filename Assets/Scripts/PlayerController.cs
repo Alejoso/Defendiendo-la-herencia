@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI; 
 
@@ -16,10 +17,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float currentHealth;
     [SerializeField] private float maxHealth;
 
-    private bool takeDamage; 
-    [SerializeField] private float inmmunityFrame;
-
+    private bool takeDamage;
+    [SerializeField] private bool inmmunityFrame;
     [SerializeField] private float inmmunityFrameTimer;
+
 
     //Shooting mecanic variables
     public GameObject bullet; 
@@ -36,7 +37,9 @@ public class PlayerController : MonoBehaviour
 
         //Set uo variables
         currentHealth = maxHealth;
+        healthBar.value = currentHealth / maxHealth; 
         takeDamage = false; 
+
     }
 
     void FixedUpdate()
@@ -45,13 +48,15 @@ public class PlayerController : MonoBehaviour
         RotateSprite();
         Shooting();
 
+    }
 
-        
-        if (takeDamage)
+    void Update()
+    {
+        if (takeDamage && inmmunityFrame == false)
         {
             takeDamage = false;
-            TakeDamage();
-            
+            inmmunityFrame = true; 
+            TakeDamage(10f);
         }
     }
 
@@ -104,16 +109,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
             takeDamage = true;
         }
     }
-    
-    void TakeDamage()
+
+    //Take damage and update slider
+    void TakeDamage(float damage)
     {
+        currentHealth -= damage;
+        healthBar.value = currentHealth / maxHealth;
+        StartCoroutine(InnmunityFrameTimer());
+    }
+    
+    //Co-rutine for InmmunityFrames
+    IEnumerator InnmunityFrameTimer()
+    {
+        yield return new WaitForSeconds(inmmunityFrameTimer);
+        inmmunityFrame = false; 
     }
     
 
