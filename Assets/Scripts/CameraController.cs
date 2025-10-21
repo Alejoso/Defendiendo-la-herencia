@@ -2,16 +2,31 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Transform playerPosition;
-    float offset = -10f; 
+    private Camera cam;
+    private Transform player;
+    [SerializeField]
+    private float threshold;
+    [SerializeField]
+    private float cameraSpeed; 
+    
     void Start()
     {
-        playerPosition = GameObject.Find("Player").GetComponent<Transform>(); 
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        cam = Camera.main; 
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
-        transform.position = playerPosition.position + new Vector3(0,0, offset);  
+        //New camera follow, so we can have a cool effect where if the mouse moves, the camera also does
+        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 targetPosition = (player.position + mousePosition) / 2f;
+
+        targetPosition.x = Mathf.Clamp(targetPosition.x, -threshold + player.position.x, threshold + player.position.x);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, -threshold + player.position.y, threshold + player.position.y);
+        targetPosition.z = -10f; 
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
+
     }
 }
