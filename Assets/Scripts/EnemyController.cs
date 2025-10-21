@@ -6,21 +6,21 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private Slider healthBar;
     [SerializeField] private float speed;
-    
+
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
 
-    private Rigidbody2D rb; 
+    private Rigidbody2D rb;
     private Transform player;
 
     void Awake()
     {
         //Organize values to the health bar slider
         health = maxHealth;
-        healthBar.value = 1; 
+        healthBar.value = 1;
 
         player = GameObject.Find("Player").GetComponent<Transform>();
-        rb = GetComponent<Rigidbody2D>(); 
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -29,7 +29,12 @@ public class EnemyController : MonoBehaviour
         FollowPlayer();
 
         if (health <= 0)
-            Destroy(gameObject); 
+            Death();
+    }
+
+    void Death()
+    {
+        Destroy(gameObject);
     }
 
     //When it collides with a bullet do..
@@ -54,9 +59,9 @@ public class EnemyController : MonoBehaviour
         health -= damage;
         UpdateSlider();
     }
-    
+
     void UpdateSlider()
     {
-        healthBar.value = health / maxHealth; 
+        healthBar.value = health / maxHealth;
     }
 }
