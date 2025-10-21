@@ -11,16 +11,15 @@ public class DracuPallete : MonoBehaviour
     [SerializeField] string playerTag = "Player";
     [SerializeField] AudioClip pickupSfx;
     [SerializeField] GameObject pickupVfx;
-    [SerializeField] float destroyDelay = 1f;
-
     Vector3 _startPos;
     bool _collected;
-    AudioSource _audio;
+
+    private GameController gameController;
 
     void Awake()
     {
         _startPos = transform.position;
-        _audio = GetComponent<AudioSource>();
+        gameController = GameObject.Find("GameController").GetComponent<GameController>(); 
     }
 
     void OnEnable()
@@ -46,6 +45,8 @@ public class DracuPallete : MonoBehaviour
 
         _collected = true;
 
+        gameController.AddXp(10f); 
+
         // Play VFX/SFX
         if (pickupVfx) Instantiate(pickupVfx, transform.position, Quaternion.identity);
         if (pickupSfx)
@@ -58,15 +59,6 @@ public class DracuPallete : MonoBehaviour
             playerAudio.PlayOneShot(pickupSfx);
         }
 
-        // Disable visuals & collider immediately; destroy after SFX fires
-        var sr = GetComponent<SpriteRenderer>();
-        if (sr) sr.enabled = false;
-        var col = GetComponent<Collider2D>();
-        if (col) col.enabled = false;
-
-        // TODO: Add your coin logic here (e.g., GameManager.AddCoins(1);)
-        //wait 0.47 seconds to destroy
-
-        Destroy(gameObject, destroyDelay);
+        Destroy(gameObject);
     }
 }

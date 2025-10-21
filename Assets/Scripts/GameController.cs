@@ -1,7 +1,8 @@
-using System.CodeDom.Compiler;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class GameController : MonoBehaviour
 {
@@ -21,7 +22,15 @@ public class GameController : MonoBehaviour
 
 
     //See where the player is positioned
-    [SerializeField] private string playerLocation; 
+    [SerializeField] private string playerLocation;
+
+    //XP Controll
+    public float playerXP;
+    [SerializeField] private int playerLevel;
+    [SerializeField] private float xpNeedForLevelUP;
+    [SerializeField] private Image xpFill;
+    [SerializeField] private TextMeshProUGUI lvText;
+
     void Awake()
     {
         cam = Camera.main;
@@ -33,7 +42,15 @@ public class GameController : MonoBehaviour
         currentWave = 1;
         WaveSpawner(currentWave);
         canSpawnWave = true;
-        playerLocation = "Spawn"; 
+        playerLocation = "Spawn";
+
+        //Player basic xp variables
+        playerLevel = 1;
+        playerLevel = 1;
+        xpNeedForLevelUP = CalculateXPNeededForLevelUp(playerLevel); 
+        lvText.text = "LV" + playerLevel;
+        playerXP = 0; 
+        xpFill.fillAmount = playerXP / xpNeedForLevelUP;
 
     }
 
@@ -47,11 +64,7 @@ public class GameController : MonoBehaviour
             currentWave++;
             WaveSpawner(currentWave);
         }
-        
-        if(currentWave > totalWaves)
-        {
-            Debug.Log("You win"); 
-        }
+
     }
 
     //Spawn random enemies multiplying the wave number in a random between 4 and 7
@@ -83,9 +96,41 @@ public class GameController : MonoBehaviour
 
         return spawnPosition;
     }
+
+    void HandleLevel()
+    {
+
+        if (playerXP >= xpNeedForLevelUP)
+        {
+            playerLevel++;
+
+            lvText.text = "LV " + playerLevel;
+
+            xpNeedForLevelUP = CalculateXPNeededForLevelUp(playerLevel); 
+            playerXP = 0;
+
+        }
+        
+        xpFill.fillAmount = playerXP / xpNeedForLevelUP; 
+
+    }
     
+
     public void ChangePlayerLocation(string newPlayerLocation)
     {
-        playerLocation = newPlayerLocation; 
+        playerLocation = newPlayerLocation;
     }
+
+    public void AddXp(float xpToAdd)
+    {
+        playerXP += xpToAdd;
+        HandleLevel();
+
+    }
+    
+    float CalculateXPNeededForLevelUp(float playerLevel)
+    {
+        return 100 * Mathf.Pow(1.3f , playerLevel); 
+    }
+
 }
