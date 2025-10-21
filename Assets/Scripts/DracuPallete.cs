@@ -50,8 +50,12 @@ public class DracuPallete : MonoBehaviour
         if (pickupVfx) Instantiate(pickupVfx, transform.position, Quaternion.identity);
         if (pickupSfx)
         {
-            if (_audio == null) _audio = gameObject.AddComponent<AudioSource>();
-            _audio.PlayOneShot(pickupSfx);
+            AudioSource playerAudio = other.GetComponent<AudioSource>();
+            if (playerAudio == null)
+            {
+                playerAudio = other.gameObject.AddComponent<AudioSource>();
+            }
+            playerAudio.PlayOneShot(pickupSfx);
         }
 
         // Disable visuals & collider immediately; destroy after SFX fires
