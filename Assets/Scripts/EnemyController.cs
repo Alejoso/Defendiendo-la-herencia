@@ -4,14 +4,20 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyController : MonoBehaviour
 {
+    //Enemies variables
     [SerializeField] private Slider healthBar;
     [SerializeField] private float speed;
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
-
+    [SerializeField] private float dracuPalleteDropProbability;
     private Rigidbody2D rb;
+
+    //Player position
     private Transform player;
+
+    //DracuPlallete prefab
+    [SerializeField] private GameObject dracuPallete; 
 
     void Awake()
     {
@@ -29,11 +35,15 @@ public class EnemyController : MonoBehaviour
         FollowPlayer();
 
         if (health <= 0)
+        {
             Death();
+        }
     }
 
     void Death()
     {
+        if (Random.value <= dracuPalleteDropProbability)
+            Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation); 
         Destroy(gameObject);
     }
 

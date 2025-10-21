@@ -144,6 +144,8 @@ MonoBehaviour:
   speed: 150
   maxHealth: 100
   health: 0
+  dracuPalleteDropProbability: 0.4
+  dracuPallete: {fileID: 1010471504206957112, guid: 05967e74b99c2324084add09661294f5, type: 3}
 --- !u!50 &5979279583659361085
 Rigidbody2D:
   serializedVersion: 5
