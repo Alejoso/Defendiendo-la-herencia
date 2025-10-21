@@ -6,6 +6,9 @@ public class BulletScript : MonoBehaviour
     private Camera cam;
     private Rigidbody2D rb;
     public float speed;
+
+    private float bulletDuration = 3f;
+    private float timer; 
     void Start()
     {
         //Get mouse position
@@ -27,5 +30,11 @@ public class BulletScript : MonoBehaviour
     void Update()
     {
         
+        //Destroy bullet after 3 seconds
+        timer += Time.deltaTime; 
+        if(timer >= bulletDuration)
+        {
+            Destroy(gameObject); 
+        }
     }
 }

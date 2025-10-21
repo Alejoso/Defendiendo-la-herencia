@@ -1,16 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI; 
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     //Player variables
-    [SerializeField]
-    private float speed = 5f;
+    [SerializeField] private float speed = 5f;
 
     Rigidbody2D rb;
     Camera cam;
     public float lookingDirection;
 
+    [SerializeField] private Slider healthBar;
+
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+
+    private bool takeDamage; 
+    [SerializeField] private float inmmunityFrame;
+
+    [SerializeField] private float inmmunityFrameTimer;
 
     //Shooting mecanic variables
     public GameObject bullet; 
@@ -24,13 +33,26 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true; // top-down
         cam = Camera.main;
+
+        //Set uo variables
+        currentHealth = maxHealth;
+        takeDamage = false; 
     }
 
     void FixedUpdate()
     {
         MovePlayer();
         RotateSprite();
-        Shooting(); 
+        Shooting();
+
+
+        
+        if (takeDamage)
+        {
+            takeDamage = false;
+            TakeDamage();
+            
+        }
     }
 
     void MovePlayer()
@@ -61,7 +83,8 @@ public class PlayerController : MonoBehaviour
         rb.MoveRotation(lookingDirection + spriteOffset);
 
     }
-    
+
+    //Shooting mechanic with intervals of when the player can shoot
     void Shooting()
     {
         if (canShoot == false)
@@ -73,12 +96,25 @@ public class PlayerController : MonoBehaviour
                 shootingTimer = 0;
             }
         }
-        
-        if(Input.GetMouseButton(0) && canShoot)
+
+        if (Input.GetMouseButton(0) && canShoot)
         {
             canShoot = false;
-            Instantiate(bullet, transform.position, Quaternion.identity); 
+            Instantiate(bullet, transform.position, Quaternion.identity);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            takeDamage = true;
         }
     }
     
+    void TakeDamage()
+    {
+    }
+    
+
 }
