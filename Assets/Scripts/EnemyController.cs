@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     private Transform player;
 
     //DracuPlallete prefab
-    [SerializeField] private GameObject dracuPallete; 
+    [SerializeField] private GameObject dracuPallete;
 
     void Awake()
     {
@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         FollowPlayer();
 
@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
     void Death()
     {
         if (Random.value <= dracuPalleteDropProbability)
-            Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation); 
+            Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation);
         Destroy(gameObject);
     }
 
@@ -61,7 +61,7 @@ public class EnemyController : MonoBehaviour
     void FollowPlayer()
     {
         Vector3 positionToPlayer = player.position - transform.position;
-        rb.linearVelocity = positionToPlayer.normalized * speed * Time.deltaTime;
+        rb.linearVelocity = positionToPlayer.normalized * speed;
     }
 
     void TakeDamage(int damage)
