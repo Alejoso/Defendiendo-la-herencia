@@ -11,7 +11,7 @@ public class DracuPallete : MonoBehaviour
     [SerializeField] string playerTag = "Player";
     [SerializeField] AudioClip pickupSfx;
     [SerializeField] GameObject pickupVfx;
-    [SerializeField] float destroyDelay = 0.02f;
+    [SerializeField] float destroyDelay = 0.47f;
 
     Vector3 _startPos;
     bool _collected;
@@ -61,6 +61,7 @@ public class DracuPallete : MonoBehaviour
         if (col) col.enabled = false;
 
         // TODO: Add your coin logic here (e.g., GameManager.AddCoins(1);)
+        //wait 0.47 seconds to destroy
 
         //Destroy(gameObject, destroyDelay);
     }
