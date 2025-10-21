@@ -407,7 +407,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.197
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -596,8 +596,8 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 34.838707
-  m_PointLightOuterAngle: 51.09677
+  m_PointLightInnerAngle: 46.45161
+  m_PointLightOuterAngle: 83.6129
   m_PointLightInnerRadius: 0
   m_PointLightOuterRadius: 11.41
   m_ShapeLightParametricSides: 5
