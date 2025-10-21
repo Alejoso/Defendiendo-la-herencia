@@ -31,6 +31,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private Image xpFill;
     [SerializeField] private TextMeshProUGUI lvText;
 
+    //Canvas skill levelUp
+    [SerializeField] private Image[] skills;
+    
+
     void Awake()
     {
         cam = Camera.main;
@@ -102,6 +106,7 @@ public class GameController : MonoBehaviour
 
         if (playerXP >= xpNeedForLevelUP)
         {
+            SkillSelection(); 
             playerLevel++;
 
             lvText.text = "LV " + playerLevel;
@@ -127,10 +132,17 @@ public class GameController : MonoBehaviour
         HandleLevel();
 
     }
-    
+
     float CalculateXPNeededForLevelUp(float playerLevel)
     {
-        return 100 * Mathf.Pow(1.3f , playerLevel); 
+        return 100 * Mathf.Pow(1.3f, playerLevel);
     }
+    
+    void SkillSelection()
+    {
+        Time.timeScale = 0;
+
+
+    } 
 
 }

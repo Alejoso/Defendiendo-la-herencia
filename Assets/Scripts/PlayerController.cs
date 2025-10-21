@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float timeBetweenShooting;
     [SerializeField] private GameObject bulletSpawn; 
 
-
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
