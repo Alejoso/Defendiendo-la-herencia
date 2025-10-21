@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -23,11 +23,24 @@ public class PlayerController : MonoBehaviour
 
 
     //Shooting mecanic variables
-    public GameObject bullet; 
+    public GameObject bullet;
     private bool canShoot = true;
     private float shootingTimer;
     [SerializeField] private float timeBetweenShooting;
-    [SerializeField] private GameObject bulletSpawn; 
+    [SerializeField] private GameObject bulletSpawn;
+
+    //Muzzle flash effect
+    [Header("Muzzle Flash")]
+    [SerializeField] private UnityEngine.Rendering.Universal.Light2D muzzleFlashLight;
+    [SerializeField] private float muzzleFlashIntensity = 10f;
+    [SerializeField] private float muzzleFlashFadeSpeed = 30f;
+    private float currentMuzzleIntensity = 0f;
+
+    //Shooting VFX
+    [Header("Shooting VFX")]
+    [SerializeField] private GameObject shootingVfxPrefab;
+
+
 
     void Awake()
     {
@@ -37,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         //Set uo variables
         currentHealth = maxHealth;
-        healthBar.value = currentHealth / maxHealth; 
+        healthBar.value = currentHealth / maxHealth;
 
     }
 
@@ -46,7 +59,7 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         RotateSprite();
         Shooting();
-
+        UpdateMuzzleFlash();
     }
 
 
@@ -96,6 +109,32 @@ public class PlayerController : MonoBehaviour
         {
             canShoot = false;
             Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity);
+
+            // Spawn shooting VFX particle system
+            if (shootingVfxPrefab != null)
+            {
+                // Get the player's current Z rotation and apply custom X and Y rotations
+                float playerRotation = transform.eulerAngles.z;
+                Quaternion vfxRotation = Quaternion.Euler(playerRotation + 90, -90, 0);
+                Instantiate(shootingVfxPrefab, bulletSpawn.transform.position, vfxRotation);
+            }
+
+            // Trigger muzzle flash
+            if (muzzleFlashLight != null)
+            {
+                currentMuzzleIntensity = muzzleFlashIntensity;
+            }
+        }
+    }
+
+    //Update muzzle flash light intensity (fade out effect)
+    void UpdateMuzzleFlash()
+    {
+        if (muzzleFlashLight != null && currentMuzzleIntensity > 0)
+        {
+            currentMuzzleIntensity -= muzzleFlashFadeSpeed * Time.deltaTime;
+            if (currentMuzzleIntensity < 0) currentMuzzleIntensity = 0;
+            muzzleFlashLight.intensity = currentMuzzleIntensity;
         }
     }
 
@@ -104,7 +143,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && !inmmunityFrame)
         {
             inmmunityFrame = true;
-            TakeDamage(10f); 
+            TakeDamage(10f);
         }
     }
 
@@ -115,13 +154,13 @@ public class PlayerController : MonoBehaviour
         healthBar.value = currentHealth / maxHealth;
         StartCoroutine(InnmunityFrameTimer());
     }
-    
+
     //Co-rutine for InmmunityFrames
     IEnumerator InnmunityFrameTimer()
     {
         yield return new WaitForSeconds(inmmunityFrameTimer);
-        inmmunityFrame = false; 
+        inmmunityFrame = false;
     }
-    
+
 
 }

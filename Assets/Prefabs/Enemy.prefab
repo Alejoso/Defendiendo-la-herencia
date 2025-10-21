@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8168088206690325802}
-  speed: 150
+  speed: 2.5
   maxHealth: 100
   health: 0
   dracuPalleteDropProbability: 0.4
