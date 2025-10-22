@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     //Player position
     private Transform player;
 
+    private PlayerController playerController;
+
     //DracuPlallete prefab
     [SerializeField] private GameObject dracuPallete;
 
@@ -26,6 +28,7 @@ public class EnemyController : MonoBehaviour
         healthBar.value = 1;
 
         player = GameObject.Find("Player").GetComponent<Transform>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>(); 
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -53,7 +56,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             Destroy(collision.gameObject);
-            TakeDamage(10);
+            TakeDamage(playerController.GetDamage());
         }
     }
 

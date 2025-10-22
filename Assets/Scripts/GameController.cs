@@ -32,13 +32,17 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lvText;
 
     //Canvas skill levelUp
-    [SerializeField] private Image[] skills;
-    
+    [SerializeField] private GameObject skillMenu;
+
+    //Audios
+    [SerializeField] private AudioClip levelUpSFX;
+
+    [HideInInspector] public AudioSource audioSource; 
 
     void Awake()
     {
         cam = Camera.main;
-
+        audioSource = GetComponent<AudioSource>(); 
         randomWaveAdd = Random.Range(0, 4); //Generate a random wave to add to the min waves
 
         //Set up basic variables
@@ -53,9 +57,10 @@ public class GameController : MonoBehaviour
         playerLevel = 1;
         xpNeedForLevelUP = CalculateXPNeededForLevelUp(playerLevel); 
         lvText.text = "LV" + playerLevel;
-        playerXP = 0; 
+        playerXP = 0;
         xpFill.fillAmount = playerXP / xpNeedForLevelUP;
-
+    
+        skillMenu.SetActive(false);
     }
 
     void Update()
@@ -130,7 +135,6 @@ public class GameController : MonoBehaviour
     {
         playerXP += xpToAdd;
         HandleLevel();
-
     }
 
     float CalculateXPNeededForLevelUp(float playerLevel)
@@ -140,8 +144,9 @@ public class GameController : MonoBehaviour
     
     void SkillSelection()
     {
+        audioSource.PlayOneShot(levelUpSFX);
         Time.timeScale = 0;
-
+        skillMenu.SetActive(true);
 
     } 
 

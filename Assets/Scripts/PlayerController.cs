@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,6 +8,8 @@ public class PlayerController : MonoBehaviour
 {
     //Player variables
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private int damage; 
 
     Rigidbody2D rb;
     Camera cam;
@@ -16,7 +19,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Slider healthBar;
 
     [SerializeField] private float currentHealth;
-    [SerializeField] private float maxHealth;
 
     private bool inmmunityFrame;
     private float inmmunityFrameTimer = 0.67f;
@@ -40,11 +42,15 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting VFX")]
     [SerializeField] private GameObject shootingVfxPrefab;
 
+    //Aduio
+    private AudioSource gameControllerAudioSource;
 
+    [SerializeField] private AudioClip shootingSFX; 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameControllerAudioSource = GameObject.Find("GameController").GetComponent<AudioSource>();
         rb.freezeRotation = true; // top-down
         cam = Camera.main;
 
@@ -109,6 +115,7 @@ public class PlayerController : MonoBehaviour
         {
             canShoot = false;
             Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity);
+            gameControllerAudioSource.PlayOneShot(shootingSFX); 
 
             // Spawn shooting VFX particle system
             if (shootingVfxPrefab != null)
@@ -160,6 +167,26 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(inmmunityFrameTimer);
         inmmunityFrame = false;
+    }
+
+    public void AddMaxHealt(float healthToAdd)
+    {
+        maxHealth += healthToAdd;
+    }
+
+    public void AddDamage(int damageToAdd)
+    {
+        damage += damageToAdd;
+    }
+
+    public void AddSpeed(float speedMultiplier)
+    {
+        speed = (speed * speedMultiplier) + speed;
+    }
+    
+    public int GetDamage()
+    {
+        return damage; 
     }
 
 
