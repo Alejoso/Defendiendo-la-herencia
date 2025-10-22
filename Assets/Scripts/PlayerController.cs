@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     //Player variables
     [SerializeField] private float speed = 5f;
     [SerializeField] private float maxHealth;
-    [SerializeField] private int damage; 
+    [SerializeField] private int damage;
 
     Rigidbody2D rb;
     Camera cam;
@@ -24,12 +24,34 @@ public class PlayerController : MonoBehaviour
     private float inmmunityFrameTimer = 0.67f;
 
 
-    //Shooting mecanic variables
+    //Weapon system variables
+    [Header("Weapon Loadout")]
+    [SerializeField] private Sprite revolverSprite;
+    [SerializeField] private Sprite meleeSprite;
+    [SerializeField] private GameObject meleeVisualSprite; // Visual sprite object for melee weapon
+    private SpriteRenderer playerSpriteRenderer;
+
+    [Header("Revolver Settings")]
     public GameObject bullet;
-    private bool canShoot = true;
-    private float shootingTimer;
+    [SerializeField] private int maxAmmo = 30;
     [SerializeField] private float timeBetweenShooting;
     [SerializeField] private GameObject bulletSpawn;
+    private int currentAmmo;
+    private bool canShoot = true;
+    private float shootingTimer;
+
+    [Header("Melee Settings")]
+    [SerializeField] private GameObject meleeWeapon; // Child object with BoxCollider2D
+    [SerializeField] private float meleeAttackCooldown = 0.5f;
+    [SerializeField] private float meleeLockoutTime = 8f;
+    private bool canMelee = true;
+    private float meleeTimer;
+
+    // Weapon state
+    private enum WeaponMode { Revolver, Melee }
+    private WeaponMode currentWeaponMode = WeaponMode.Revolver;
+    private bool isLockedInMelee = false;
+    private float meleeLockoutTimer;
 
     //Muzzle flash effect
     [Header("Muzzle Flash")]
@@ -45,26 +67,42 @@ public class PlayerController : MonoBehaviour
     //Aduio
     private AudioSource gameControllerAudioSource;
 
-    [SerializeField] private AudioClip shootingSFX; 
+    [SerializeField] private AudioClip shootingSFX;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>(); // Get player's sprite renderer
         gameControllerAudioSource = GameObject.Find("GameController").GetComponent<AudioSource>();
         rb.freezeRotation = true; // top-down
         cam = Camera.main;
 
-        //Set uo variables
+        //Set up variables
         currentHealth = maxHealth;
         healthBar.value = currentHealth / maxHealth;
 
+        // Initialize weapon system
+        currentAmmo = maxAmmo;
+        SwitchToRevolver();
+
+        // Disable melee collider and visual initially
+        if (meleeWeapon != null)
+        {
+            var meleeCollider = meleeWeapon.GetComponent<Collider2D>();
+            if (meleeCollider != null) meleeCollider.enabled = false;
+        }
+
+        if (meleeVisualSprite != null)
+        {
+            meleeVisualSprite.SetActive(false);
+        }
     }
 
     void FixedUpdate()
     {
         MovePlayer();
         RotateSprite();
-        Shooting();
+        HandleWeaponSystem();
         UpdateMuzzleFlash();
     }
 
@@ -98,9 +136,37 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //Shooting mechanic with intervals of when the player can shoot
-    void Shooting()
+    // ============== WEAPON SYSTEM ==============
+
+    void HandleWeaponSystem()
     {
+        // Handle melee lockout timer
+        if (isLockedInMelee)
+        {
+            meleeLockoutTimer -= Time.deltaTime;
+            if (meleeLockoutTimer <= 0)
+            {
+                // Unlock and return to revolver
+                isLockedInMelee = false;
+                currentAmmo = maxAmmo; // Reload ammo
+                SwitchToRevolver();
+            }
+        }
+
+        // Handle current weapon mode
+        if (currentWeaponMode == WeaponMode.Revolver && !isLockedInMelee)
+        {
+            HandleRevolver();
+        }
+        else if (currentWeaponMode == WeaponMode.Melee)
+        {
+            HandleMelee();
+        }
+    }
+
+    void HandleRevolver()
+    {
+        // Shooting cooldown timer
         if (canShoot == false)
         {
             shootingTimer += Time.deltaTime;
@@ -111,16 +177,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0) && canShoot)
+        // Shoot when left click and can shoot
+        if (Input.GetMouseButton(0) && canShoot && currentAmmo > 0)
         {
             canShoot = false;
+            currentAmmo--;
+
             Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity);
-            gameControllerAudioSource.PlayOneShot(shootingSFX); 
+            gameControllerAudioSource.PlayOneShot(shootingSFX);
 
             // Spawn shooting VFX particle system
             if (shootingVfxPrefab != null)
             {
-                // Get the player's current Z rotation and apply custom X and Y rotations
                 float playerRotation = transform.eulerAngles.z;
                 Quaternion vfxRotation = Quaternion.Euler(playerRotation + 90, -90, 0);
                 Instantiate(shootingVfxPrefab, bulletSpawn.transform.position, vfxRotation);
@@ -131,7 +199,115 @@ public class PlayerController : MonoBehaviour
             {
                 currentMuzzleIntensity = muzzleFlashIntensity;
             }
+
+            // Check if out of ammo
+            if (currentAmmo <= 0)
+            {
+                SwitchToMelee();
+                isLockedInMelee = true;
+                meleeLockoutTimer = meleeLockoutTime;
+            }
         }
+    }
+
+    void HandleMelee()
+    {
+        // Melee cooldown timer
+        if (canMelee == false)
+        {
+            meleeTimer += Time.deltaTime;
+            if (meleeTimer >= meleeAttackCooldown)
+            {
+                canMelee = true;
+                meleeTimer = 0;
+            }
+        }
+
+        // Melee attack on left click
+        if (Input.GetMouseButton(0) && canMelee)
+        {
+            canMelee = false;
+            StartCoroutine(MeleeAttack());
+        }
+    }
+
+    IEnumerator MeleeAttack()
+    {
+        // Enable melee collider and animate melee visual swing during the active window
+        const float attackDuration = 0.2f; // active hit window duration
+
+        // Prepare swing visual (optional)
+        if (meleeVisualSprite != null)
+        {
+            // Start at -80 degrees on Z
+            meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, -80f);
+        }
+
+        if (meleeWeapon != null)
+        {
+            var meleeCollider = meleeWeapon.GetComponent<Collider2D>();
+            if (meleeCollider != null)
+            {
+                meleeCollider.enabled = true;
+
+                // Animate rotation from -80 to -200 over attackDuration while hitbox is active
+                float elapsed = 0f;
+                while (elapsed < attackDuration)
+                {
+                    if (meleeVisualSprite != null)
+                    {
+                        float t = elapsed / attackDuration;
+                        float z = Mathf.LerpAngle(-80f, -200f, t);
+                        meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, z);
+                    }
+
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                // Ensure final rotation at end of swing
+                if (meleeVisualSprite != null)
+                {
+                    meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, -200f);
+                }
+
+                meleeCollider.enabled = false;
+            }
+        }
+    }
+
+    void SwitchToRevolver()
+    {
+        currentWeaponMode = WeaponMode.Revolver;
+        if (playerSpriteRenderer != null && revolverSprite != null)
+        {
+            playerSpriteRenderer.sprite = revolverSprite;
+        }
+
+        // Hide melee visual sprite
+        if (meleeVisualSprite != null)
+        {
+            meleeVisualSprite.SetActive(false);
+        }
+
+        Debug.Log("Switched to Revolver - Ammo: " + currentAmmo);
+    }
+
+    void SwitchToMelee()
+    {
+        currentWeaponMode = WeaponMode.Melee;
+        if (playerSpriteRenderer != null && meleeSprite != null)
+        {
+            playerSpriteRenderer.sprite = meleeSprite;
+        }
+
+        // Show melee visual sprite
+        if (meleeVisualSprite != null)
+        {
+            meleeVisualSprite.SetActive(true);
+        }
+
+        Debug.Log("Switched to Melee - Locked for " + meleeLockoutTime + " seconds");
     }
 
     //Update muzzle flash light intensity (fade out effect)
@@ -183,10 +359,10 @@ public class PlayerController : MonoBehaviour
     {
         speed = (speed * speedMultiplier) + speed;
     }
-    
+
     public int GetDamage()
     {
-        return damage; 
+        return damage;
     }
 
 

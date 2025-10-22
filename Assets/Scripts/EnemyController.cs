@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
         healthBar.value = 1;
 
         player = GameObject.Find("Player").GetComponent<Transform>();
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>(); 
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -58,6 +58,11 @@ public class EnemyController : MonoBehaviour
             Destroy(collision.gameObject);
             TakeDamage(playerController.GetDamage());
         }
+        else if (collision.gameObject.CompareTag("MeleeHit"))
+        {
+            TakeDamage(playerController.GetDamage());
+        }
+
     }
 
     //Script to dumbly follow the player based on a vector that points to the player and some speed
