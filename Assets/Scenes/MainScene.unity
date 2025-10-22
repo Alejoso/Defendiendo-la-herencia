@@ -7631,29 +7631,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 73317955005644533, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 448546840880819857, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3281911737783674315, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3661701708964865109, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661701708964865109, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4435198254853261079, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6204320413568222676, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_LocalPosition.x
