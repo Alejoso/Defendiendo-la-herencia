@@ -20,13 +20,13 @@ public class LanterPlayer : MonoBehaviour
         {
             spotLight = GetComponent<Light2D>();
         }
-        
+
         if (spotLight != null)
         {
             // Ensure it's a 2D light; set to Point if Spot isn't available in your URP version
             spotLight.lightType = Light2D.LightType.Point; // If you have 2D Spot available, set it in the Inspector
         }
-        
+
         // randomize seed so multiple candles don't sync
         _noiseSeed = Random.Range(0f, 1000f);
     }
