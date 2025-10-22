@@ -415,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 90612159}
   - component: {fileID: 90612160}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -704,7 +704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 135178317}
   - component: {fileID: 135178318}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1064,7 +1064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 273047189}
   - component: {fileID: 273047190}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1349,7 +1349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 292368029}
   - component: {fileID: 292368030}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1654,7 +1654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 394114042}
   - component: {fileID: 394114043}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1957,7 +1957,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486060509}
   - component: {fileID: 486060510}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2035,7 +2035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486247004}
   - component: {fileID: 486247005}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2340,7 +2340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584405877}
   - component: {fileID: 584405878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2653,6 +2653,7 @@ GameObject:
   - component: {fileID: 673396335}
   - component: {fileID: 673396336}
   - component: {fileID: 673396337}
+  - component: {fileID: 673396338}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2687,14 +2688,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28275f04c96a7141ad99cb0ddf3478a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1051161168834849254, guid: d712b82f5abe5ea47abc153768a3f575, type: 3}
-  minWave: 5
-  totalWaves: 0
-  currentWave: 0
-  minSpawnDistance: 14
-  maxSpawnDistance: 17
-  playerLocation: 
-  currentObjective: Casa del abuelo
   playerXP: 0
   playerLevel: 0
   xpNeedForLevelUP: 0
@@ -2703,7 +2696,6 @@ MonoBehaviour:
   skillMenu: {fileID: 1129874544}
   levelUpSFX: {fileID: 8300000, guid: af3ae9747d0dc5a46ba3187c80cb55f1, type: 3}
   audioSource: {fileID: 0}
-  playerLocationText: {fileID: 1643300775}
 --- !u!82 &673396337
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2801,6 +2793,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &673396338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673396334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 887f4fa5eff120e4b948847d4a2edf1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 1051161168834849254, guid: d712b82f5abe5ea47abc153768a3f575, type: 3}
+  playerLocation: 
+  currentObjective: 
+  keyLocations:
+  - Casa del abuelo
+  - El Taller
+  - Lago
+  - El Almacen
+  didPlayerCompleteObjective: 0
+  minWave: 0
+  totalWaves: 0
+  currentWave: 0
+  minSpawnDistance: 0
+  maxSpawnDistance: 0
+  playerLocationText: {fileID: 1643300775}
 --- !u!1 &694566703
 GameObject:
   m_ObjectHideFlags: 0
@@ -3261,7 +3280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 848424368}
   - component: {fileID: 848424369}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3359,6 +3378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941d58ff88d506d4f920772047035ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisPlace: El Taller
 --- !u!61 &886634170
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3534,7 +3554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 896400765}
   - component: {fileID: 896400766}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3816,7 +3836,7 @@ GameObject:
   m_Component:
   - component: {fileID: 937310500}
   - component: {fileID: 937310501}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4243,7 +4263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1046013277}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barriers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4695,7 +4715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1145070679}
   - component: {fileID: 1145070680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4828,6 +4848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941d58ff88d506d4f920772047035ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisPlace: El Almacen
 --- !u!61 &1202760519
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4899,7 +4920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1231645458}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barriers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5066,7 +5087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1248865456}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barriers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5538,7 +5559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382956320}
   - component: {fileID: 1382956321}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5615,7 +5636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1395731715}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barriers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5733,6 +5754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941d58ff88d506d4f920772047035ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisPlace: Casa del abuelo
 --- !u!1 &1474701486
 GameObject:
   m_ObjectHideFlags: 0
@@ -5968,7 +5990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1542949884}
   - component: {fileID: 1542949885}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6046,7 +6068,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1554950811}
   - component: {fileID: 1554950812}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6430,6 +6452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941d58ff88d506d4f920772047035ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisPlace: Lago
 --- !u!61 &1678014968
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6502,7 +6525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701896621}
   - component: {fileID: 1701896622}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Invisible barrier (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7608,14 +7631,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5501646663429809630, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5501646663429809630, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6204320413568222676, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7655,22 +7670,6 @@ PrefabInstance:
     - target: {fileID: 6204320413568222676, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8767463313453830328, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: damage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8767463313453830328, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 902159256}
-    - target: {fileID: 8767463313453830328, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: shootingSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 6421b9a780fed4c43b8563703815c8a5, type: 3}
-    - target: {fileID: 8767463313453830328, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
-      propertyPath: playerCollsionObject
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

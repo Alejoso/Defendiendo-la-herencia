@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class FincaDelAbuelo : MonoBehaviour
 {
-    private GameController gameController;
+    private GameProgression gameProgression;
     private GameObject invisibleBorders;
 
-    private string thisPlace = "Casa del abuelo"; 
+    [SerializeField] private string thisPlace = "Casa del abuelo";
 
 
     void Awake()
     {
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        invisibleBorders = transform.Find("Invisible barriers").gameObject; 
+        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>();
+        invisibleBorders = transform.Find("Invisible barriers").gameObject;
+    }
+
+    void Update()
+    {
+        if(gameProgression.didPlayerCompleteObjective)
+        {
+            invisibleBorders.SetActive(false); 
+        }
     }
 
     // Update is called once per frame
@@ -19,9 +27,9 @@ public class FincaDelAbuelo : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            gameController.ChangePlayerLocation(thisPlace);
+            gameProgression.ChangePlayerLocation(thisPlace);
 
-            string currentObjective = gameController.currentObjective;
+            string currentObjective = gameProgression.currentObjective;
 
             if(currentObjective == thisPlace)
             {
@@ -33,9 +41,10 @@ public class FincaDelAbuelo : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            gameController.ChangePlayerLocation(""); 
+            gameProgression.ChangePlayerLocation("");
         }
     }
+
 }
