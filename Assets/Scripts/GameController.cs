@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 
 public class GameController : MonoBehaviour
@@ -23,6 +24,10 @@ public class GameController : MonoBehaviour
 
     //See where the player is positioned
     [SerializeField] private string playerLocation;
+    private HashSet<string> visitedZones = new HashSet<string>();
+
+    [SerializeField] public string currentObjective; 
+
 
     //XP Controll
     public float playerXP;
@@ -37,7 +42,12 @@ public class GameController : MonoBehaviour
     //Audios
     [SerializeField] private AudioClip levelUpSFX;
 
-    [HideInInspector] public AudioSource audioSource; 
+    [HideInInspector] public AudioSource audioSource;
+
+    //Title of places animations 
+    private Animator playerLocationTextAnimator;
+    [SerializeField] private TextMeshProUGUI playerLocationText; 
+    
 
     void Awake()
     {
@@ -50,7 +60,8 @@ public class GameController : MonoBehaviour
         currentWave = 1;
         WaveSpawner(currentWave);
         canSpawnWave = true;
-        playerLocation = "Spawn";
+        //playerLocation = "Spawn";
+        playerLocationTextAnimator = GameObject.Find("Place Titles").GetComponent<Animator>(); 
 
         //Player basic xp variables
         playerLevel = 1;
@@ -128,7 +139,21 @@ public class GameController : MonoBehaviour
 
     public void ChangePlayerLocation(string newPlayerLocation)
     {
+        if (string.IsNullOrEmpty(newPlayerLocation))
+        {
+            playerLocation = "";
+            return;
+        }
+        
         playerLocation = newPlayerLocation;
+        playerLocationText.text = newPlayerLocation;
+
+        if (!visitedZones.Contains(newPlayerLocation))
+        {
+            visitedZones.Add(newPlayerLocation); //Add it to the hashset
+            playerLocationTextAnimator.Play("Text fade in and out"); //Play the animation
+            
+        }
     }
 
     public void AddXp(float xpToAdd)
