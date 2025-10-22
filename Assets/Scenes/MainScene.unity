@@ -2805,7 +2805,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887f4fa5eff120e4b948847d4a2edf1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1051161168834849254, guid: d712b82f5abe5ea47abc153768a3f575, type: 3}
+  enemy:
+  - {fileID: 1051161168834849254, guid: d712b82f5abe5ea47abc153768a3f575, type: 3}
+  - {fileID: 1051161168834849254, guid: cbb0b07e05a73f34aa94a034dd048a3b, type: 3}
+  - {fileID: 1051161168834849254, guid: 52bd06e185c6def48bb31cbebe200be0, type: 3}
+  - {fileID: 1051161168834849254, guid: b5c7bd86721dd6546a0fd79d6e53b21d, type: 3}
   playerLocation: 
   currentObjective: 
   keyLocations:
@@ -7671,6 +7675,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 8767463313453830328, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 902159256}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
