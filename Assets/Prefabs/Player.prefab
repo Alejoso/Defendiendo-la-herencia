@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 998046254723906261}
   - component: {fileID: 4669910597628700488}
   - component: {fileID: 236902414665829203}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Melee
   m_TagString: MeleeHit
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7313587252376209268}
   - component: {fileID: 2968298479797180332}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Machete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5814054485326915742}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: BulletSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 8767463313453830328}
   - component: {fileID: 3943680421239522014}
   - component: {fileID: 5501646663429809630}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -704,7 +704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2292392552425369686}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
