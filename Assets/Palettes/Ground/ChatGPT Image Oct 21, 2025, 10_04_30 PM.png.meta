@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d85d3a780c362774ab5480fbd1d9caf4
+guid: 8413c5de98699eb41acc901e75ea1475
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8553646853717965768
-    second: Calabaza_0
+      213: -700139931890252252
+    second: ChatGPT Image Oct 21, 2025, 10_04_30 PM_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 140
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Calabaza_0
+      name: ChatGPT Image Oct 21, 2025, 10_04_30 PM_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 1024
+        x: 19
+        y: 48
+        width: 1003
+        height: 963
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 834c00671875b4980800000000000000
-      internalID: -8553646853717965768
+      spriteID: 4268d92017a9846f0800000000000000
+      internalID: -700139931890252252
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Calabaza_0: -8553646853717965768
+      ChatGPT Image Oct 21, 2025, 10_04_30 PM_0: -700139931890252252
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
