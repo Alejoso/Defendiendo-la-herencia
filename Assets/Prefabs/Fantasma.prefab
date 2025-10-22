@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 7799426335265177173}
   - component: {fileID: 3376814011014069549}
   - component: {fileID: 3040310630910125420}
+  - component: {fileID: 8486491868622131144}
   - component: {fileID: 5979279583659361085}
+  - component: {fileID: 6106671628443541109}
   m_Layer: 7
   m_Name: Fantasma
   m_TagString: Enemy
@@ -81,8 +83,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.9843137, g: 0.88411963, b: 0, a: 1}
+  m_Sprite: {fileID: -438632873, guid: 09d1f413ee01b2647be40f4cce8f0823, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -141,11 +143,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 8168088206690325802}
-  speed: 3.5
+  speed: 3
   maxHealth: 200
   health: 0
   dracuPalleteDropProbability: 0.4
   dracuPallete: {fileID: 1010471504206957112, guid: 05967e74b99c2324084add09661294f5, type: 3}
+--- !u!114 &8486491868622131144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051161168834849254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd704f4b45adea43815269daeb73941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInterval: 5
+  fadeDuration: 2
 --- !u!50 &5979279583659361085
 Rigidbody2D:
   serializedVersion: 5
@@ -173,6 +189,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &6106671628443541109
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051161168834849254}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6cbe40b5ee0712e44a46e840d623549c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1971800700235445808
 GameObject:
   m_ObjectHideFlags: 0
