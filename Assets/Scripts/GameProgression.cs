@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
 
@@ -36,6 +37,10 @@ public class GameProgression : MonoBehaviour
     private Animator playerLocationTextAnimator;
     [SerializeField] private TextMeshProUGUI playerLocationText;
 
+    //Information for the player
+    [SerializeField] private TextMeshProUGUI currentObjectiveText;
+    [SerializeField] private Image arrowToObjective; 
+
     void Awake()
     {
         cam = Camera.main;
@@ -48,8 +53,6 @@ public class GameProgression : MonoBehaviour
 
         //Set variables for porgression
         didPlayerCompleteObjective = true; 
-        
-        //Set up basic variables
 
     }
 
@@ -57,24 +60,24 @@ public class GameProgression : MonoBehaviour
     {
         //Spawn waves when there are no more enemies
         int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count();
-        if (currentEnemies == 0 && canSpawnWave && (totalWaves >= currentWave))
+        if (currentEnemies == 0 && canSpawnWave && (totalWaves >= currentWave) && !didPlayerCompleteObjective )
         {
             canSpawnWave = false;
             currentWave++;
             WaveSpawner(currentWave);
         }
 
-        if(currentWave > totalWaves)
+        if (currentWave > totalWaves)
         {
             currentWave = 1;
             didPlayerCompleteObjective = true;
-            Debug.Log("Ganaste bro"); 
         }
 
     }
     
     public void ChangePlayerLocation(string newPlayerLocation)
     {
+        
         if (string.IsNullOrEmpty(newPlayerLocation))
         {
             playerLocation = "";
@@ -87,39 +90,113 @@ public class GameProgression : MonoBehaviour
         if (!visitedZones.Contains(newPlayerLocation))
         {
             visitedZones.Add(newPlayerLocation); //Add it to the hashset
-            playerLocationTextAnimator.Play("Text fade in and out"); //Play the animation
+            playerLocationTextAnimator.Play("Text fade in and out", -1, 0f); //Play the animation
 
         }
 
-        if(playerLocation == currentObjective)
+        if (playerLocation == currentObjective)
         {
+            //Start new rounds
             didPlayerCompleteObjective = false;
-            minWave = 5; 
+            minWave = 5;
             randomWaveAdd = Random.Range(0, 4); //Generate a random wave to add to the min waves
             totalWaves = randomWaveAdd + minWave;
-            
+
             WaveSpawner(currentWave);
+
+            //
         }
+        
     }
 
     //Spawn random enemies multiplying the wave number in a random between 4 and 7
     void WaveSpawner(int currentWave)
     {
-        GameObject enemyToSpawn = enemy[1];
-        int enemiesToSpawn = 0; 
+        GameObject enemyToSpawn = enemy[0];
+        int enemiesToSpawn = 0;
 
+        //Sapwn enemies in the Casa del abuelo
         if (indexKeyLocation == 0)
         {
             enemyToSpawn = enemy[0];
-            enemiesToSpawn = currentWave * Random.Range(2,5);
+            enemiesToSpawn = currentWave * Random.Range(2, 5);
+
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
+            }
+        }
+
+        //Spawn enemies in El Taller
+        if (indexKeyLocation == 1)
+        {
+            enemiesToSpawn = currentWave * Random.Range(3, 5);
+
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                //Sacar un fantasmita con 50% de probabilidad
+                if (Random.value < 0.5)
+                {
+                    enemyToSpawn = enemy[1];
+                } else
+                {
+                    enemyToSpawn = enemy[0]; 
+                }
+
+                Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
+            }
+
+        }
+
+        //Spawn enemies in Lago
+        if (indexKeyLocation == 2)
+        {
+            enemiesToSpawn = currentWave * Random.Range(2, 5);
+
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                //Sacar una pata sola con 40% , fantasmita con 70% de probabilidad
+                if(Random.value < 0.4)
+                {
+                    enemyToSpawn = enemy[2]; 
+                }
+                else if (Random.value < 0.7)
+                {
+                    enemyToSpawn = enemy[1];
+                } else
+                {
+                    enemyToSpawn = enemy[0]; 
+                }
+
+                Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
+            }
 
         }
         
-        for (int i = 0; i < enemiesToSpawn; i++)
+        //Spawn enemies in Almacen
+        if (indexKeyLocation == 3)
         {
-            Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
-        }
+            enemiesToSpawn = currentWave * Random.Range(2, 5);
 
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+
+                if(Random.value < 0.3)
+                {
+                    enemyToSpawn = enemy[3]; 
+                }
+                else if (Random.value < 0.7)
+                {
+                    enemyToSpawn = enemy[2];
+                } else
+                {
+                    enemyToSpawn = enemy[1]; 
+                }
+
+                Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
+            }
+        }
+        
         canSpawnWave = true;
     }
 
