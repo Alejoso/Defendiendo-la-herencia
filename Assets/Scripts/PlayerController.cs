@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
         if (meleeVisualSprite != null)
         {
             // Start at -80 degrees on Z
-            meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, -80f);
+            meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, -200f);
         }
 
         if (meleeWeapon != null)
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
                     if (meleeVisualSprite != null)
                     {
                         float t = elapsed / attackDuration;
-                        float z = Mathf.LerpAngle(-80f, -200f, t);
+                        float z = Mathf.LerpAngle(-200f, -80f, t);
                         meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, z);
                     }
 
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
                 // Ensure final rotation at end of swing
                 if (meleeVisualSprite != null)
                 {
-                    meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, -200f);
+                    meleeVisualSprite.transform.localRotation = Quaternion.Euler(0f, 0f, -80f);
                 }
 
                 meleeCollider.enabled = false;
