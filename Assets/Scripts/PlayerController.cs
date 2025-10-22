@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     //Weapon system variables
     [Header("Weapon Loadout")]
     [SerializeField] private Sprite revolverSprite;
+    [SerializeField] private Sprite shotgunSprite;
     [SerializeField] private Sprite meleeSprite;
     [SerializeField] private GameObject meleeVisualSprite; // Visual sprite object for melee weapon
     private SpriteRenderer playerSpriteRenderer;
@@ -49,7 +50,11 @@ public class PlayerController : MonoBehaviour
 
     // Weapon state
     private enum WeaponMode { Revolver, Melee }
+    private enum WeaponType { Revolver, Shotgun }
     private WeaponMode currentWeaponMode = WeaponMode.Revolver;
+    [Header("Ranged Weapon Selection")]
+    [SerializeField] private WeaponType weapon = WeaponType.Revolver; // default as requested
+    [SerializeField] private float shotgunSpreadAngle = 20f; // degrees to each side
     private bool isLockedInMelee = false;
     private float meleeLockoutTimer;
 
@@ -183,7 +188,25 @@ public class PlayerController : MonoBehaviour
             canShoot = false;
             currentAmmo--;
 
-            Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity);
+            // Compute aim direction from spawn to mouse
+            Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 toMouse = mouseWorld - bulletSpawn.transform.position;
+            Vector2 baseDir = new Vector2(toMouse.x, toMouse.y).normalized;
+
+            // Fire based on weapon selection
+            if (weapon == WeaponType.Revolver)
+            {
+                SpawnBulletWithDirection(baseDir);
+            }
+            else // Shotgun: 3 bullets with spread
+            {
+                Vector2 leftDir = Rotate2D(baseDir, -shotgunSpreadAngle);
+                Vector2 rightDir = Rotate2D(baseDir, shotgunSpreadAngle);
+                SpawnBulletWithDirection(baseDir);
+                SpawnBulletWithDirection(leftDir);
+                SpawnBulletWithDirection(rightDir);
+            }
+
             gameControllerAudioSource.PlayOneShot(shootingSFX);
 
             // Spawn shooting VFX particle system
@@ -208,6 +231,26 @@ public class PlayerController : MonoBehaviour
                 meleeLockoutTimer = meleeLockoutTime;
             }
         }
+    }
+
+    // --- Helpers for shotgun ---
+    private void SpawnBulletWithDirection(Vector2 dir)
+    {
+        var go = Instantiate(bullet, bulletSpawn.transform.position, Quaternion.identity);
+        var bs = go.GetComponent<BulletScript>();
+        if (bs != null)
+        {
+            bs.useOverrideDirection = true;
+            bs.overrideDirection = dir.normalized;
+        }
+    }
+
+    private static Vector2 Rotate2D(Vector2 v, float degrees)
+    {
+        float rad = degrees * Mathf.Deg2Rad;
+        float cos = Mathf.Cos(rad);
+        float sin = Mathf.Sin(rad);
+        return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
     }
 
     void HandleMelee()
@@ -279,9 +322,12 @@ public class PlayerController : MonoBehaviour
     void SwitchToRevolver()
     {
         currentWeaponMode = WeaponMode.Revolver;
-        if (playerSpriteRenderer != null && revolverSprite != null)
+        if (playerSpriteRenderer != null)
         {
-            playerSpriteRenderer.sprite = revolverSprite;
+            if (weapon == WeaponType.Shotgun && shotgunSprite != null)
+                playerSpriteRenderer.sprite = shotgunSprite;
+            else if (revolverSprite != null)
+                playerSpriteRenderer.sprite = revolverSprite;
         }
 
         // Hide melee visual sprite
