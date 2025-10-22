@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class GameProgression : MonoBehaviour
 {
@@ -39,7 +39,9 @@ public class GameProgression : MonoBehaviour
 
     //Information for the player
     [SerializeField] private TextMeshProUGUI currentObjectiveText;
-    [SerializeField] private Image arrowToObjective; 
+    [SerializeField] private TextMeshProUGUI currentWaveText;
+    [SerializeField] private GameObject arrowToObjective;
+    private ArrowPointToCurrentObjective arrowPointToCurrentObjective; 
 
     void Awake()
     {
@@ -52,7 +54,15 @@ public class GameProgression : MonoBehaviour
         currentObjective = keyLocations[indexKeyLocation];
 
         //Set variables for porgression
-        didPlayerCompleteObjective = true; 
+        didPlayerCompleteObjective = true;
+
+        currentObjectiveText.text = "Current objective: " + currentObjective;
+
+        currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
+
+        arrowPointToCurrentObjective = arrowToObjective.transform.Find("ArrowImage").GetComponent<ArrowPointToCurrentObjective>();
+
+        arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation); 
 
     }
 
@@ -60,17 +70,25 @@ public class GameProgression : MonoBehaviour
     {
         //Spawn waves when there are no more enemies
         int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count();
-        if (currentEnemies == 0 && canSpawnWave && (totalWaves >= currentWave) && !didPlayerCompleteObjective )
+        if (currentEnemies == 0 && canSpawnWave && (totalWaves > currentWave) && !didPlayerCompleteObjective )
         {
             canSpawnWave = false;
             currentWave++;
+            currentWaveText.text = "Wave " + currentWave + " / " + totalWaves; 
             WaveSpawner(currentWave);
         }
 
-        if (currentWave > totalWaves)
+        if (currentWave == totalWaves && (currentObjective == playerLocation) && currentEnemies == 0)
         {
-            currentWave = 1;
+            currentWaveText.text = ""; 
+            currentWave = 0;
             didPlayerCompleteObjective = true;
+            indexKeyLocation++;
+            currentObjective = keyLocations[indexKeyLocation];
+            currentObjectiveText.text = "Objetivo: " + currentObjective;
+            arrowToObjective.SetActive(true); 
+            arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation); 
+
         }
 
     }
@@ -97,6 +115,7 @@ public class GameProgression : MonoBehaviour
         if (playerLocation == currentObjective)
         {
             //Start new rounds
+            arrowToObjective.SetActive(false); 
             didPlayerCompleteObjective = false;
             minWave = 5;
             randomWaveAdd = Random.Range(0, 4); //Generate a random wave to add to the min waves
@@ -104,7 +123,7 @@ public class GameProgression : MonoBehaviour
 
             WaveSpawner(currentWave);
 
-            //
+            currentObjectiveText.text = "Objetivo: Defiende " + currentObjective; 
         }
         
     }
