@@ -182,7 +182,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 8037279785966413873, guid: 7768559f17efdfd4fa7bcb2b5673a02d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -395,7 +395,7 @@ MonoBehaviour:
   spotLight: {fileID: 0}
   autoFlicker: 1
   minIntensity: 0.7
-  maxIntensity: 1.4
+  maxIntensity: 1.44
   flickerSpeed: 3
   usePerlinNoise: 1
 --- !u!114 &7273355887098848601
@@ -584,6 +584,9 @@ MonoBehaviour:
   cameraTurnSpeed: 4
   maxHealth: 100
   damage: 20
+  healthText: {fileID: 0}
+  speedText: {fileID: 0}
+  damageText: {fileID: 0}
   healthBar: {fileID: 0}
   currentHealth: 0
   revolverSprite: {fileID: 1218046081935710299, guid: ead803932f1771a45ad54300d52e598a, type: 3}
@@ -597,7 +600,7 @@ MonoBehaviour:
   meleeWeapon: {fileID: 73317955005644533}
   meleeAttackCooldown: 0.5
   meleeLockoutTime: 8
-  weapon: 0
+  weapon: 1
   shotgunSpreadAngle: 20
   muzzleFlashLight: {fileID: 4133121085887236301}
   muzzleFlashIntensity: 4
