@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 998046254723906261}
   - component: {fileID: 4669910597628700488}
   - component: {fileID: 236902414665829203}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Melee
   m_TagString: MeleeHit
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7313587252376209268}
   - component: {fileID: 2968298479797180332}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Machete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 764552059208317308}
   - component: {fileID: 7729918863664362835}
   - component: {fileID: 61106916449189204}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fov
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 7044641009705748930}
   - component: {fileID: 6620850291686154331}
   - component: {fileID: 5921148916417658890}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Radius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5814054485326915742}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 8767463313453830328}
   - component: {fileID: 3943680421239522014}
   - component: {fileID: 5501646663429809630}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -726,7 +726,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2292392552425369686}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 4461222674526206050}
   - component: {fileID: 4133121085887236301}
   - component: {fileID: 5760183029987211270}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
