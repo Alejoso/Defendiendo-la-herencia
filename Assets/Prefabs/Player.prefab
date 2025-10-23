@@ -600,13 +600,14 @@ MonoBehaviour:
   meleeWeapon: {fileID: 73317955005644533}
   meleeAttackCooldown: 0.5
   meleeLockoutTime: 8
-  weapon: 1
+  weapon: 0
   shotgunSpreadAngle: 20
   muzzleFlashLight: {fileID: 4133121085887236301}
   muzzleFlashIntensity: 4
   muzzleFlashFadeSpeed: 30
   shootingVfxPrefab: {fileID: 4468814042383256695, guid: 82523e4b39d573042ac5eaccd9d8f557, type: 3}
   shootingSFX: {fileID: 8300000, guid: 6421b9a780fed4c43b8563703815c8a5, type: 3}
+  reloadImage: {fileID: 0}
 --- !u!58 &3943680421239522014
 CircleCollider2D:
   m_ObjectHideFlags: 0
