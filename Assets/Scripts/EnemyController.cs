@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
     [SerializeField] private float dracuPalleteDropProbability;
+    private float dolexProbabillity = 0.025f; 
     private Rigidbody2D rb;
 
     //Player position
@@ -20,6 +21,8 @@ public class EnemyController : MonoBehaviour
 
     //DracuPlallete prefab
     [SerializeField] private GameObject dracuPallete;
+
+    [SerializeField] private GameObject dolex; 
 
     void Awake()
     {
@@ -45,8 +48,18 @@ public class EnemyController : MonoBehaviour
 
     void Death()
     {
+        
         if (Random.value <= dracuPalleteDropProbability)
-            Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation);
+        {
+             Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation);
+        } else
+        {
+            if(Random.value <= dolexProbabillity)
+            {
+                Instantiate(dolex, transform.position, dolex.transform.rotation);
+            }
+        }
+           
         Destroy(gameObject);
     }
 

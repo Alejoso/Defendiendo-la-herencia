@@ -443,7 +443,18 @@ public class PlayerController : MonoBehaviour
     public int GetDamage()
     {
         return damage;
-        
+
+    }
+    
+    public void Heal(int HealAmount)
+    {
+        if ((currentHealth + HealAmount) > maxHealth)
+        {
+            currentHealth = maxHealth;
+        } else
+        {
+            currentHealth += HealAmount; 
+        }
     }
 
 
