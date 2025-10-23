@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class bossFightStart : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class bossFightStart : MonoBehaviour
     [SerializeField] private GameObject bossPrefab;
     [Tooltip("Optional specific spawn point. If empty, this object's position will be used.")]
     [SerializeField] private Transform bossSpawnPoint;
+
+    [Header("Screen Fade")]
+    [Tooltip("Full-screen white Image on a UI Canvas. We'll fade its alpha in/out.")]
+    [SerializeField] private Image whiteScreenImage;
+    [SerializeField] private float fadeInDuration = 1f;
+    [SerializeField] private float fadeOutDuration = 1f;
 
     private Camera mainCamera;
     private MonoBehaviour cameraController;
@@ -28,6 +35,16 @@ public class bossFightStart : MonoBehaviour
             {
                 Debug.LogWarning("CameraController script not found on main camera!");
             }
+        }
+
+        // Ensure fade image starts transparent
+        if (whiteScreenImage != null)
+        {
+            var c = whiteScreenImage.color;
+            c.a = 0f;
+            whiteScreenImage.color = c;
+            if (!whiteScreenImage.gameObject.activeSelf)
+                whiteScreenImage.gameObject.SetActive(true);
         }
     }
 
@@ -93,13 +110,33 @@ public class bossFightStart : MonoBehaviour
             mainCamera.transform.localPosition = originalPosition;
         }
 
-        // Re-enable CameraController
+        // Fade in to white, spawn boss when fully covered, then fade out
+        if (whiteScreenImage != null)
+        {
+            // Fade in
+            yield return StartCoroutine(FadeImage(whiteScreenImage, 0f, 1f, fadeInDuration));
+
+            // Spawn boss while covered
+            TrySpawnBoss();
+
+            // Fade out
+            yield return StartCoroutine(FadeImage(whiteScreenImage, 1f, 0f, fadeOutDuration));
+        }
+        else
+        {
+            // No fade image assigned, just spawn immediately
+            TrySpawnBoss();
+        }
+
+        // Re-enable CameraController after transition
         if (cameraController != null)
         {
             cameraController.enabled = true;
         }
+    }
 
-        // After all the intro effects, instantiate the boss if assigned
+    private void TrySpawnBoss()
+    {
         if (bossPrefab != null)
         {
             Vector3 spawnPos = bossSpawnPoint != null ? bossSpawnPoint.position : transform.position;
@@ -110,5 +147,34 @@ public class bossFightStart : MonoBehaviour
         {
             Debug.LogWarning("bossFightStart: Boss prefab is not assigned. Skipping boss spawn.");
         }
+    }
+
+    private System.Collections.IEnumerator FadeImage(Image img, float from, float to, float duration)
+    {
+        if (img == null)
+            yield break;
+
+        if (duration <= 0f)
+        {
+            var cInst = img.color;
+            cInst.a = to;
+            img.color = cInst;
+            yield break;
+        }
+
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float a = Mathf.Lerp(from, to, t / duration);
+            var c = img.color;
+            c.a = a;
+            img.color = c;
+            yield return null;
+        }
+        // Ensure exact final value
+        var cFinal = img.color;
+        cFinal.a = to;
+        img.color = cFinal;
     }
 }
