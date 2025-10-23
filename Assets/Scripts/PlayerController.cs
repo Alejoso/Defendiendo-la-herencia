@@ -409,6 +409,7 @@ public class PlayerController : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.value = currentHealth / maxHealth;
+        healthText.text = currentHealth + "/" + maxHealth;
         StartCoroutine(InnmunityFrameTimer());
     }
 
@@ -451,10 +452,15 @@ public class PlayerController : MonoBehaviour
         if ((currentHealth + HealAmount) > maxHealth)
         {
             currentHealth = maxHealth;
-        } else
-        {
-            currentHealth += HealAmount; 
         }
+        else
+        {
+            currentHealth += HealAmount;
+        }
+
+        healthText.text = currentHealth + "/" + maxHealth;
+        healthBar.value = currentHealth / maxHealth;
+
     }
 
 

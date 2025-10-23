@@ -42,6 +42,7 @@ public class Dolex : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Colisione"); 
         if (_collected) return;
         if (!other.CompareTag(playerTag)) return;
 
