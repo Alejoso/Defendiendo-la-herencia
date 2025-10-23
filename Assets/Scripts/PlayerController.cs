@@ -82,6 +82,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AudioClip shootingSFX;
 
+    //Player pistol or shotgun UI
+
+    [SerializeField] private Image reloadImage; 
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -100,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         healthText.text = currentHealth + "/" + maxHealth;
         speedText.text = (speed * 10f).ToString();
-        damageText.text = damage.ToString(); 
+        damageText.text = damage.ToString();
 
         // Disable melee collider and visual initially
         if (meleeWeapon != null)
@@ -168,8 +173,11 @@ public class PlayerController : MonoBehaviour
         if (isLockedInMelee)
         {
             meleeLockoutTimer -= Time.deltaTime;
+
+            reloadImage.fillAmount = meleeLockoutTimer / meleeLockoutTime;  
             if (meleeLockoutTimer <= 0)
             {
+                reloadImage.fillAmount = 0; 
                 // Unlock and return to revolver
                 isLockedInMelee = false;
                 currentAmmo = maxAmmo; // Reload ammo
@@ -194,6 +202,7 @@ public class PlayerController : MonoBehaviour
         if (canShoot == false)
         {
             shootingTimer += Time.deltaTime;
+            
             if (shootingTimer >= timeBetweenShooting)
             {
                 canShoot = true;
@@ -248,6 +257,7 @@ public class PlayerController : MonoBehaviour
                 SwitchToMelee();
                 isLockedInMelee = true;
                 meleeLockoutTimer = meleeLockoutTime;
+                reloadImage.fillAmount = 1f; 
             }
         }
     }
@@ -446,7 +456,7 @@ public class PlayerController : MonoBehaviour
         return damage;
 
     }
-    
+
     public void Heal(int HealAmount)
     {
         if ((currentHealth + HealAmount) > maxHealth)
@@ -461,6 +471,11 @@ public class PlayerController : MonoBehaviour
         healthText.text = currentHealth + "/" + maxHealth;
         healthBar.value = currentHealth / maxHealth;
 
+    }
+    
+    public void ChangeToShootgun()
+    {
+        weapon = WeaponType.Shotgun; 
     }
 
 

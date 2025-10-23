@@ -8,6 +8,10 @@ public class GameProgression : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemy;
 
+    //Player
+
+    private PlayerController playerController; 
+
     // See where the player is positioned and the objectives
     [SerializeField] public string playerLocation;
     [SerializeField] public string currentObjective;
@@ -43,12 +47,18 @@ public class GameProgression : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentObjectiveText;
     [SerializeField] private TextMeshProUGUI currentWaveText;
     [SerializeField] private GameObject arrowToObjective;
-    private ArrowPointToCurrentObjective arrowPointToCurrentObjective; 
+    private ArrowPointToCurrentObjective arrowPointToCurrentObjective;
+
+    //Shootgun
+
+    [SerializeField] GameObject shotgun; 
+
 
     void Awake()
     {
         cam = Camera.main;
 
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>(); 
         playerLocationTextAnimator = GameObject.Find("Place Titles").GetComponent<Animator>();
         currentWave = 1; 
         //Set the first location to grandpa's house
@@ -66,7 +76,9 @@ public class GameProgression : MonoBehaviour
 
         arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
 
-        hasPlayerChangedLocation = true;  
+        hasPlayerChangedLocation = true;
+
+        shotgun.SetActive(false); 
 
     }
 
@@ -80,7 +92,6 @@ public class GameProgression : MonoBehaviour
             currentWave++;
             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
             WaveSpawner(currentWave);
-            Debug.Log("Entre a aqui"); 
         }
     }
 
@@ -90,6 +101,11 @@ public class GameProgression : MonoBehaviour
 
         if (currentWave == totalWaves && (currentObjective == playerLocation) && currentEnemies == 0)
         {
+            if(indexKeyLocation == 1)
+            {
+                ShootgunAppear(); 
+            }
+
             currentWaveText.text = ""; 
             currentWave = 1;
             didPlayerCompleteObjective = true;
@@ -305,7 +321,10 @@ public class GameProgression : MonoBehaviour
 
     }
 
-    
+    void ShootgunAppear()
+    {
+        shotgun.SetActive(true);
+    }
 
 
 }
