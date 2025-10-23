@@ -1778,6 +1778,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6712083221774938669, guid: 85076e9104c839f4b857c76fcf5dcf38, type: 3}
+      propertyPath: dashSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712083221774938669, guid: 85076e9104c839f4b857c76fcf5dcf38, type: 3}
+      propertyPath: tackleInterval
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712083221774938669, guid: 85076e9104c839f4b857c76fcf5dcf38, type: 3}
+      propertyPath: backOffDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -17,8 +17,8 @@ TagManager:
   - HurtBox
   - EnemyCollision
   - Barrier
-  - 
-  - 
+  - Hitboxes
+  - Player
   - 
   - 
   - 
