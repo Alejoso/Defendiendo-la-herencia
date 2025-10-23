@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     //Player variables
     [SerializeField] private float speed = 5f;
+    [SerializeField] private float cameraTurnSpeed;
     [SerializeField] private float maxHealth;
     [SerializeField] private int damage;
 
@@ -131,13 +132,20 @@ public class PlayerController : MonoBehaviour
         // --- Mirar hacia el mouse ---
         Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 toMouse = mouseWorld - transform.position;
+
+        if (toMouse.sqrMagnitude < 0.1f)  // 0.05f ≈ distancia mínima, puedes ajustar
+        return;
+
         lookingDirection = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
 
         // Ajusta este offset según cómo esté dibujado tu sprite:
         // si "mira" hacia ARRIBA en el arte, usa -90f; si mira a la DERECHA, usa 0f.
         float spriteOffset = 90f;
 
-        rb.MoveRotation(lookingDirection + spriteOffset);
+        float targetRotation = lookingDirection + spriteOffset;
+        float smoothedRotation = Mathf.LerpAngle(rb.rotation, targetRotation, cameraTurnSpeed * Time.fixedDeltaTime);
+
+        rb.MoveRotation(smoothedRotation);
 
     }
 
@@ -394,6 +402,7 @@ public class PlayerController : MonoBehaviour
     public void AddMaxHealt(float healthToAdd)
     {
         maxHealth += healthToAdd;
+        currentHealth += healthToAdd; 
     }
 
     public void AddDamage(int damageToAdd)

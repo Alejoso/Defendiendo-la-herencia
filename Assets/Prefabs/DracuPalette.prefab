@@ -107,7 +107,7 @@ MonoBehaviour:
   playerTag: Player
   pickupSfx: {fileID: 8300000, guid: b93a46a57c3ec8d4895603532ff67963, type: 3}
   pickupVfx: {fileID: 0}
-  destroyDelay: 0.02
+  xpQuantity: 25
 --- !u!58 &495598406209415832
 CircleCollider2D:
   m_ObjectHideFlags: 0

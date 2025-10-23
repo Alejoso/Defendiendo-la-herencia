@@ -26,8 +26,13 @@ public class LightAim : MonoBehaviour
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = transform.position.z; // Keep same Z-depth for 2D
 
+
+
         // Calculate direction from light to mouse
         Vector2 direction = (mouseWorldPos - transform.position).normalized;
+        
+        if (direction.sqrMagnitude < 1f)  // 0.05f ≈ distancia mínima, puedes ajustar
+            return;
 
         // Calculate the angle in degrees
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + offsetAngle;

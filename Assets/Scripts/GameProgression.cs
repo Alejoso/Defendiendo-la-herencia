@@ -12,6 +12,8 @@ public class GameProgression : MonoBehaviour
     [SerializeField] public string playerLocation;
     [SerializeField] public string currentObjective;
 
+    private bool hasPlayerChangedLocation;
+
     [SerializeField] private string[] keyLocations;
     private int indexKeyLocation;
 
@@ -56,13 +58,15 @@ public class GameProgression : MonoBehaviour
         //Set variables for porgression
         didPlayerCompleteObjective = true;
 
-        currentObjectiveText.text = "Current objective: " + currentObjective;
+        currentObjectiveText.text = "Objetivo: " + currentObjective;
 
         currentWaveText.text = "";
 
         arrowPointToCurrentObjective = arrowToObjective.transform.Find("ArrowImage").GetComponent<ArrowPointToCurrentObjective>();
 
-        arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation); 
+        arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
+
+        hasPlayerChangedLocation = true;  
 
     }
 
@@ -76,6 +80,7 @@ public class GameProgression : MonoBehaviour
             currentWave++;
             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
             WaveSpawner(currentWave);
+            Debug.Log("Entre a aqui"); 
         }
     }
 
@@ -86,26 +91,26 @@ public class GameProgression : MonoBehaviour
         if (currentWave == totalWaves && (currentObjective == playerLocation) && currentEnemies == 0)
         {
             currentWaveText.text = ""; 
-            currentWave = 0;
+            currentWave = 1;
             didPlayerCompleteObjective = true;
             indexKeyLocation++;
             currentObjective = keyLocations[indexKeyLocation];
             currentObjectiveText.text = "Objetivo: " + currentObjective;
             arrowToObjective.SetActive(true); 
-            arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation); 
-
+            arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
+            hasPlayerChangedLocation = true; 
         }
     }
 
     public void ChangePlayerLocation(string newPlayerLocation)
     {
-        
+
         if (string.IsNullOrEmpty(newPlayerLocation))
         {
             playerLocation = "";
             return;
         }
-        
+
         playerLocation = newPlayerLocation;
         playerLocationText.text = newPlayerLocation;
 
@@ -116,22 +121,55 @@ public class GameProgression : MonoBehaviour
 
         }
 
-        if (playerLocation == currentObjective)
+        if (playerLocation == currentObjective && hasPlayerChangedLocation)
         {
             //Start new rounds
-            arrowToObjective.SetActive(false); 
+            hasPlayerChangedLocation = false;
+            arrowToObjective.SetActive(false);
             didPlayerCompleteObjective = false;
-            minWave = 5;
-            randomWaveAdd = Random.Range(0, 4); //Generate a random wave to add to the min waves
-            totalWaves = randomWaveAdd + minWave;
-             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves; 
-
+            GenerateWaveCounts(); 
+            currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
 
             WaveSpawner(currentWave);
 
-            currentObjectiveText.text = "Objetivo: Defiende " + currentObjective; 
+            currentObjectiveText.text = "Objetivo: Defiende " + currentObjective;
         }
-        
+
+    }
+
+    void GenerateWaveCounts()
+    {
+        if (indexKeyLocation == 0)
+        {
+            minWave = 5;
+            randomWaveAdd = Random.Range(0, 4); //Generate a random wave to add to the min waves
+            totalWaves = randomWaveAdd + minWave;
+            return;
+        }
+
+        if (indexKeyLocation == 1)
+        {
+            minWave = 7;
+            randomWaveAdd = Random.Range(2, 4); //Generate a random wave to add to the min waves
+            totalWaves = randomWaveAdd + minWave;
+            return;
+        }
+
+        if (indexKeyLocation == 2)
+        {
+            minWave = 10;
+            randomWaveAdd = Random.Range(3, 4); //Generate a random wave to add to the min waves
+            totalWaves = randomWaveAdd + minWave;
+            return;
+        }
+
+        if (indexKeyLocation == 3)
+        {
+            minWave = 12;
+            randomWaveAdd = Random.Range(3, 6); //Generate a random wave to add to the min waves
+            totalWaves = randomWaveAdd + minWave;
+            return;
+        }
     }
 
     //Spawn random enemies multiplying the wave number in a random between 4 and 7
@@ -145,6 +183,7 @@ public class GameProgression : MonoBehaviour
         {
             enemyToSpawn = enemy[0];
             enemiesToSpawn = currentWave * Random.Range(2, 5);
+            minWave = 5; 
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
@@ -156,7 +195,7 @@ public class GameProgression : MonoBehaviour
         if (indexKeyLocation == 1)
         {
             enemiesToSpawn = currentWave * Random.Range(3, 5);
-
+            minWave = 7; 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 //Sacar un fantasmita con 50% de probabilidad
@@ -177,6 +216,7 @@ public class GameProgression : MonoBehaviour
         if (indexKeyLocation == 2)
         {
             enemiesToSpawn = currentWave * Random.Range(2, 5);
+            minWave = 10; 
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
@@ -202,7 +242,7 @@ public class GameProgression : MonoBehaviour
         if (indexKeyLocation == 3)
         {
             enemiesToSpawn = currentWave * Random.Range(2, 5);
-
+            minWave = 12; 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
 

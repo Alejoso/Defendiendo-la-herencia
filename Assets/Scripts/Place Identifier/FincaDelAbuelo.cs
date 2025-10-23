@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FincaDelAbuelo : MonoBehaviour
@@ -25,19 +26,20 @@ public class FincaDelAbuelo : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             gameProgression.ChangePlayerLocation(thisPlace);
 
             string currentObjective = gameProgression.currentObjective;
 
-            if(currentObjective == thisPlace)
+            if (currentObjective == thisPlace)
             {
-                invisibleBorders.SetActive(true); 
+                invisibleBorders.SetActive(true);
             }
         }
-        
+
     }
+    
 
     void OnTriggerExit2D(Collider2D collision)
     {

@@ -11,6 +11,8 @@ public class DracuPallete : MonoBehaviour
     [SerializeField] string playerTag = "Player";
     [SerializeField] AudioClip pickupSfx;
     [SerializeField] GameObject pickupVfx;
+
+    [SerializeField] float xpQuantity; 
     Vector3 _startPos;
     bool _collected;
 
@@ -45,7 +47,7 @@ public class DracuPallete : MonoBehaviour
 
         _collected = true;
 
-        gameController.AddXp(10f); 
+        gameController.AddXp(xpQuantity); 
 
         // Play VFX/SFX
         if (pickupVfx) Instantiate(pickupVfx, transform.position, Quaternion.identity);
