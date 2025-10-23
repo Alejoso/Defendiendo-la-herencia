@@ -7,6 +7,12 @@ public class bossFightStart : MonoBehaviour
     [SerializeField] private float cameraShakeDuration = 2f;
     [SerializeField] private float cameraShakeIntensity = 0.5f;
 
+    [Header("Boss Spawn")]
+    [Tooltip("Boss prefab to instantiate after the intro finishes.")]
+    [SerializeField] private GameObject bossPrefab;
+    [Tooltip("Optional specific spawn point. If empty, this object's position will be used.")]
+    [SerializeField] private Transform bossSpawnPoint;
+
     private Camera mainCamera;
     private MonoBehaviour cameraController;
     private bool bossTriggered = false;
@@ -56,11 +62,14 @@ public class bossFightStart : MonoBehaviour
         }
 
         // Set camera to specific position for boss fight
-        Vector3 bossPosition = new Vector3(-6.92f, 14.98f, mainCamera.transform.position.z);
-        mainCamera.transform.position = bossPosition;
-        
+        if (mainCamera != null)
+        {
+            Vector3 bossPosition = new Vector3(-6.92f, 14.98f, mainCamera.transform.position.z);
+            mainCamera.transform.position = bossPosition;
+        }
+
         // Store this position for shaking
-        Vector3 originalPosition = mainCamera.transform.localPosition;
+        Vector3 originalPosition = mainCamera != null ? mainCamera.transform.localPosition : Vector3.zero;
         float elapsed = 0f;
 
         while (elapsed < cameraShakeDuration)
@@ -69,19 +78,37 @@ public class bossFightStart : MonoBehaviour
             float x = Random.Range(-1f, 1f) * cameraShakeIntensity;
             float y = Random.Range(-1f, 1f) * cameraShakeIntensity;
 
-            mainCamera.transform.localPosition = originalPosition + new Vector3(x, y, 0f);
+            if (mainCamera != null)
+            {
+                mainCamera.transform.localPosition = originalPosition + new Vector3(x, y, 0f);
+            }
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         // Return to the original position
-        mainCamera.transform.localPosition = originalPosition;
+        if (mainCamera != null)
+        {
+            mainCamera.transform.localPosition = originalPosition;
+        }
 
         // Re-enable CameraController
         if (cameraController != null)
         {
             cameraController.enabled = true;
+        }
+
+        // After all the intro effects, instantiate the boss if assigned
+        if (bossPrefab != null)
+        {
+            Vector3 spawnPos = bossSpawnPoint != null ? bossSpawnPoint.position : transform.position;
+            Quaternion spawnRot = bossSpawnPoint != null ? bossSpawnPoint.rotation : Quaternion.identity;
+            Instantiate(bossPrefab, spawnPos, spawnRot);
+        }
+        else
+        {
+            Debug.LogWarning("bossFightStart: Boss prefab is not assigned. Skipping boss spawn.");
         }
     }
 }
