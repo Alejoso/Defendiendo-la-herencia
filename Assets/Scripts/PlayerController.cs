@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -11,6 +12,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float cameraTurnSpeed;
     [SerializeField] private float maxHealth;
     [SerializeField] private int damage;
+
+    //Diaplay player stats
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI speedText;
+    [SerializeField] private TextMeshProUGUI damageText;
+
 
     Rigidbody2D rb;
     Camera cam;
@@ -91,6 +98,10 @@ public class PlayerController : MonoBehaviour
         currentAmmo = maxAmmo;
         SwitchToRevolver();
 
+        healthText.text = currentHealth + "/" + maxHealth;
+        speedText.text = (speed * 10f).ToString();
+        damageText.text = damage.ToString(); 
+
         // Disable melee collider and visual initially
         if (meleeWeapon != null)
         {
@@ -134,7 +145,7 @@ public class PlayerController : MonoBehaviour
         Vector2 toMouse = mouseWorld - transform.position;
 
         if (toMouse.sqrMagnitude < 0.1f)  // 0.05f ≈ distancia mínima, puedes ajustar
-        return;
+            return;
 
         lookingDirection = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
 
@@ -383,6 +394,15 @@ public class PlayerController : MonoBehaviour
             TakeDamage(10f);
         }
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("HitboxNotCollide") && !inmmunityFrame)
+        {
+            inmmunityFrame = true;
+            TakeDamage(10f);
+        }
+    }
+
 
     //Take damage and update slider
     void TakeDamage(float damage)
@@ -403,21 +423,27 @@ public class PlayerController : MonoBehaviour
     {
         maxHealth += healthToAdd;
         currentHealth += healthToAdd; 
+        healthText.text = currentHealth + "/" + maxHealth;
+
     }
 
     public void AddDamage(int damageToAdd)
     {
         damage += damageToAdd;
+        damageText.text = damage.ToString(); 
     }
 
     public void AddSpeed(float speedMultiplier)
     {
         speed = (speed * speedMultiplier) + speed;
+        speedText.text = (speed * 10f).ToString();
+        
     }
 
     public int GetDamage()
     {
         return damage;
+        
     }
 
 

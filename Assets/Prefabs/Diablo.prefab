@@ -178,6 +178,12 @@ MonoBehaviour:
   dracuPallete: {fileID: 1010471504206957112, guid: 05967e74b99c2324084add09661294f5, type: 3}
   animator: {fileID: 1557489048558503663}
   attackInterval: 5
+  facingSpriteOffset: 90
+  tackleInterval: 7
+  backOffDuration: 0.5
+  backOffDistance: 2
+  dashSpeed: 40
+  tackleStateName: Tackle
 --- !u!1 &1971800700235445808
 GameObject:
   m_ObjectHideFlags: 0

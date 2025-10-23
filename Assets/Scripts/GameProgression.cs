@@ -181,12 +181,20 @@ public class GameProgression : MonoBehaviour
         //Sapwn enemies in the Casa del abuelo
         if (indexKeyLocation == 0)
         {
-            enemyToSpawn = enemy[0];
             enemiesToSpawn = currentWave * Random.Range(2, 5);
             minWave = 5; 
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
+                //Sacar un fantasmita con probabilidad variable segun la ronda
+                if (Random.value < (0.04 * currentWave))
+                {
+                    enemyToSpawn = enemy[1];
+                } else
+                {
+                    enemyToSpawn = enemy[0]; 
+                }
+
                 Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
             }
         }
@@ -279,7 +287,22 @@ public class GameProgression : MonoBehaviour
         Vector3 cameraPosition = cam.transform.position;
         Vector3 spawnPosition = new Vector3(cameraPosition.x + offset.x, cameraPosition.y + offset.y, 0);
 
-        return spawnPosition;
+        Collider2D hit = Physics2D.OverlapCircle(spawnPosition, 0.5f); 
+
+        //Prevent enemies from spwning out of bounds and from spawning inside an object
+        if (spawnPosition.x > 60f || spawnPosition.x < -80f || spawnPosition.y > 60f || spawnPosition.y < -30f)
+        {
+            return GenerateRandomEnemySpawn();
+        }
+
+        if(hit)
+        {
+            return GenerateRandomEnemySpawn(); 
+        } else
+        {
+            return spawnPosition;
+        }
+
     }
 
     
