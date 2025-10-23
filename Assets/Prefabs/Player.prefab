@@ -304,6 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7044641009705748930}
   - component: {fileID: 6620850291686154331}
+  - component: {fileID: 5921148916417658890}
   m_Layer: 0
   m_Name: Radius
   m_TagString: Untagged
@@ -378,6 +379,24 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &5921148916417658890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2858841117531226500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00a62cf28fe90a14ba41e5f747b0d642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spotLight: {fileID: 0}
+  autoFlicker: 1
+  minIntensity: 0.7
+  maxIntensity: 1.4
+  flickerSpeed: 3
+  usePerlinNoise: 1
 --- !u!1 &3281911737783674315
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +567,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   currentHealth: 0
   revolverSprite: {fileID: 1218046081935710299, guid: ead803932f1771a45ad54300d52e598a, type: 3}
+  shotgunSprite: {fileID: -7159239880388324968, guid: ead803932f1771a45ad54300d52e598a, type: 3}
   meleeSprite: {fileID: -3901951767519883801, guid: 56ed2facd729b314eab5debb73175167, type: 3}
   meleeVisualSprite: {fileID: 448546840880819857}
   bullet: {fileID: 3566626696241338444, guid: 6eef905b71217294287fa37477c9472e, type: 3}
@@ -557,6 +577,8 @@ MonoBehaviour:
   meleeWeapon: {fileID: 73317955005644533}
   meleeAttackCooldown: 0.5
   meleeLockoutTime: 8
+  weapon: 0
+  shotgunSpreadAngle: 20
   muzzleFlashLight: {fileID: 4133121085887236301}
   muzzleFlashIntensity: 4
   muzzleFlashFadeSpeed: 30

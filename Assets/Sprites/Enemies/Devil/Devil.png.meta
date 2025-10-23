@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 7150e60defc6936479090c6f1d39758b
+guid: f4bddc64a52eff24dabdf4206534b4fc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -765150924802650856
-    second: arrow_0
+      213: 7277215093650894194
+    second: Devil_0
+  - first:
+      213: -2513883589942956498
+    second: Devil_1
+  - first:
+      213: 1711278749698018416
+    second: Devil_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: arrow_0
+      name: Devil_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 13
+        x: 10
+        y: 42
+        width: 37
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 81d839fa943a165f0800000000000000
-      internalID: -765150924802650856
+      spriteID: 27d2c23429cddf460800000000000000
+      internalID: 7277215093650894194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Devil_1
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 35
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2e24cea134ec1dd0800000000000000
+      internalID: -2513883589942956498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Devil_2
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 42
+        width: 37
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07ccc63c4feafb710800000000000000
+      internalID: 1711278749698018416
       vertices: []
       indices: 
       edges: []
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      arrow_0: -765150924802650856
+      Devil_0: 7277215093650894194
+      Devil_1: -2513883589942956498
+      Devil_2: 1711278749698018416
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
