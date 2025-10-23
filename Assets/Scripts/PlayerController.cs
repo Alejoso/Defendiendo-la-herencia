@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
         Vector2 toMouse = mouseWorld - transform.position;
 
         if (toMouse.sqrMagnitude < 0.1f)  // 0.05f ≈ distancia mínima, puedes ajustar
-        return;
+            return;
 
         lookingDirection = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
 
@@ -383,6 +383,15 @@ public class PlayerController : MonoBehaviour
             TakeDamage(10f);
         }
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("HitboxNotCollide") && !inmmunityFrame)
+        {
+            inmmunityFrame = true;
+            TakeDamage(10f);
+        }
+    }
+
 
     //Take damage and update slider
     void TakeDamage(float damage)
@@ -402,7 +411,7 @@ public class PlayerController : MonoBehaviour
     public void AddMaxHealt(float healthToAdd)
     {
         maxHealth += healthToAdd;
-        currentHealth += healthToAdd; 
+        currentHealth += healthToAdd;
     }
 
     public void AddDamage(int damageToAdd)
