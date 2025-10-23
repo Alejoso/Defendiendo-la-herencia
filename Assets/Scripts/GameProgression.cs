@@ -58,7 +58,7 @@ public class GameProgression : MonoBehaviour
 
         currentObjectiveText.text = "Current objective: " + currentObjective;
 
-        currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
+        currentWaveText.text = "";
 
         arrowPointToCurrentObjective = arrowToObjective.transform.Find("ArrowImage").GetComponent<ArrowPointToCurrentObjective>();
 
@@ -70,13 +70,18 @@ public class GameProgression : MonoBehaviour
     {
         //Spawn waves when there are no more enemies
         int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count();
-        if (currentEnemies == 0 && canSpawnWave && (totalWaves > currentWave) && !didPlayerCompleteObjective )
+        if (currentEnemies == 0 && canSpawnWave && (totalWaves > currentWave) && !didPlayerCompleteObjective)
         {
             canSpawnWave = false;
             currentWave++;
-            currentWaveText.text = "Wave " + currentWave + " / " + totalWaves; 
+            currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
             WaveSpawner(currentWave);
         }
+    }
+
+    void LateUpdate()
+    {
+        int currentEnemies = GameObject.FindGameObjectsWithTag("Enemy").Count();
 
         if (currentWave == totalWaves && (currentObjective == playerLocation) && currentEnemies == 0)
         {
@@ -90,9 +95,8 @@ public class GameProgression : MonoBehaviour
             arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation); 
 
         }
-
     }
-    
+
     public void ChangePlayerLocation(string newPlayerLocation)
     {
         
@@ -120,6 +124,8 @@ public class GameProgression : MonoBehaviour
             minWave = 5;
             randomWaveAdd = Random.Range(0, 4); //Generate a random wave to add to the min waves
             totalWaves = randomWaveAdd + minWave;
+             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves; 
+
 
             WaveSpawner(currentWave);
 

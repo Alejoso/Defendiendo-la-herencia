@@ -45,7 +45,7 @@ public class ArrowPointToCurrentObjective : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 0); 
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, 0); 
 
         Vector3 direction = locationToLook.transform.position - player.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
