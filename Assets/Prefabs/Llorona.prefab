@@ -210,10 +210,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f0e3f5d85b127408a6afe1dd1508bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCollider: {fileID: 0}
-  attackParticles: {fileID: 0}
+  attackCollider: {fileID: 2702904474180416674}
+  attackParticles: {fileID: 6653388164849672857}
   attackInterval: 10
   attackDuration: 3
+  facingSpriteOffset: 270
 --- !u!1 &1971800700235445808
 GameObject:
   m_ObjectHideFlags: 0
@@ -5560,7 +5561,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1011
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
