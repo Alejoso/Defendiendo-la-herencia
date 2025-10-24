@@ -607,6 +607,8 @@ MonoBehaviour:
   muzzleFlashFadeSpeed: 30
   shootingVfxPrefab: {fileID: 4468814042383256695, guid: 82523e4b39d573042ac5eaccd9d8f557, type: 3}
   shootingSFX: {fileID: 8300000, guid: 6421b9a780fed4c43b8563703815c8a5, type: 3}
+  footstepAudioSource: {fileID: 0}
+  footstepSFX: {fileID: 8300000, guid: c7cca0bda89d99a4486789dd912e3cca, type: 3}
   reloadImage: {fileID: 0}
 --- !u!58 &3943680421239522014
 CircleCollider2D:

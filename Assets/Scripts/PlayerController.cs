@@ -79,18 +79,22 @@ public class PlayerController : MonoBehaviour
 
     //Aduio
     private AudioSource gameControllerAudioSource;
+    private AudioSource playerAudioSource;
 
     [SerializeField] private AudioClip shootingSFX;
+    [Header("Footstep Audio")]
+    [SerializeField] private AudioClip footstepSFX;
 
     //Player pistol or shotgun UI
 
-    [SerializeField] private Image reloadImage; 
+    [SerializeField] private Image reloadImage;
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>(); // Get player's sprite renderer
+        playerAudioSource = GetComponent<AudioSource>(); // Get player's AudioSource
         gameControllerAudioSource = GameObject.Find("GameController").GetComponent<AudioSource>();
         rb.freezeRotation = true; // top-down
         cam = Camera.main;
@@ -126,6 +130,7 @@ public class PlayerController : MonoBehaviour
         RotateSprite();
         HandleWeaponSystem();
         UpdateMuzzleFlash();
+        HandleFootstepAudio();
     }
 
 
@@ -174,10 +179,10 @@ public class PlayerController : MonoBehaviour
         {
             meleeLockoutTimer -= Time.deltaTime;
 
-            reloadImage.fillAmount = meleeLockoutTimer / meleeLockoutTime;  
+            reloadImage.fillAmount = meleeLockoutTimer / meleeLockoutTime;
             if (meleeLockoutTimer <= 0)
             {
-                reloadImage.fillAmount = 0; 
+                reloadImage.fillAmount = 0;
                 // Unlock and return to revolver
                 isLockedInMelee = false;
                 currentAmmo = maxAmmo; // Reload ammo
@@ -202,7 +207,7 @@ public class PlayerController : MonoBehaviour
         if (canShoot == false)
         {
             shootingTimer += Time.deltaTime;
-            
+
             if (shootingTimer >= timeBetweenShooting)
             {
                 canShoot = true;
@@ -257,7 +262,7 @@ public class PlayerController : MonoBehaviour
                 SwitchToMelee();
                 isLockedInMelee = true;
                 meleeLockoutTimer = meleeLockoutTime;
-                reloadImage.fillAmount = 1f; 
+                reloadImage.fillAmount = 1f;
             }
         }
     }
@@ -396,6 +401,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Handle footstep audio - play only when moving
+    void HandleFootstepAudio()
+    {
+        bool isMoving = rb.linearVelocity.sqrMagnitude > 0.01f;
+
+        if (playerAudioSource != null && footstepSFX != null)
+        {
+            if (isMoving)
+            {
+                // Play looping footstep sound if not already playing
+                if (!playerAudioSource.isPlaying)
+                {
+                    playerAudioSource.clip = footstepSFX;
+                    playerAudioSource.loop = true;
+                    playerAudioSource.Play();
+                }
+            }
+            else
+            {
+                // Stop footsteps when not moving
+                if (playerAudioSource.isPlaying)
+                {
+                    playerAudioSource.Stop();
+                }
+            }
+        }
+    }
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy") && !inmmunityFrame)
@@ -433,7 +466,7 @@ public class PlayerController : MonoBehaviour
     public void AddMaxHealt(float healthToAdd)
     {
         maxHealth += healthToAdd;
-        currentHealth += healthToAdd; 
+        currentHealth += healthToAdd;
         healthText.text = currentHealth + "/" + maxHealth;
 
     }
@@ -441,14 +474,14 @@ public class PlayerController : MonoBehaviour
     public void AddDamage(int damageToAdd)
     {
         damage += damageToAdd;
-        damageText.text = damage.ToString(); 
+        damageText.text = damage.ToString();
     }
 
     public void AddSpeed(float speedMultiplier)
     {
         speed = (speed * speedMultiplier) + speed;
         speedText.text = (speed * 10f).ToString();
-        
+
     }
 
     public int GetDamage()
@@ -472,13 +505,13 @@ public class PlayerController : MonoBehaviour
         healthBar.value = currentHealth / maxHealth;
 
     }
-    
+
     public void ChangeToShootgun()
     {
         weapon = WeaponType.Shotgun;
         SwitchToMelee();
-        SwitchToRevolver(); 
-        meleeLockoutTimer = 0.1f; 
+        SwitchToRevolver();
+        meleeLockoutTimer = 0.1f;
     }
 
 
