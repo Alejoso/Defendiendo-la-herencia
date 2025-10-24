@@ -811,7 +811,7 @@ MonoBehaviour:
   abueloFaces: []
   abuelo: {fileID: 1350484460}
   canvasTransition: {fileID: 1301201960}
-  transitionTime: 2
+  transitionTime: 5
 --- !u!82 &832093076
 AudioSource:
   m_ObjectHideFlags: 0

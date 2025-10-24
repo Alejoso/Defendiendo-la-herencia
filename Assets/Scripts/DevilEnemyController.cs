@@ -55,6 +55,8 @@ public class DevilEnemyController : MonoBehaviour
 
     private DevilEnemyController devilEnemyController;
 
+    private GameProgression gameProgression; 
+
     void Awake()
     {
         //Organize values to the health bar slider
@@ -67,7 +69,9 @@ public class DevilEnemyController : MonoBehaviour
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
 
-        devilEnemyController = GetComponent<DevilEnemyController>(); 
+        devilEnemyController = GetComponent<DevilEnemyController>();
+
+        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>();  
     }
 
     // Update is called once per frame
@@ -213,7 +217,7 @@ public class DevilEnemyController : MonoBehaviour
 
         health = 0;
         UpdateSlider();
-        
+
         // Stop all movement
         rb.linearVelocity = Vector2.zero;
         speed = 0f;
@@ -254,7 +258,7 @@ public class DevilEnemyController : MonoBehaviour
         transform.position = originalPosition;
 
         // Load WinScene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("WinScene");
+        gameProgression.LoadWinScene(); 
     }
 
     //When it collides with a bullet do..

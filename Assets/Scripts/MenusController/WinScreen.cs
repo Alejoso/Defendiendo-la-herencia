@@ -68,7 +68,6 @@ public class WinScreen : MonoBehaviour
 
                 if (textIndex > texts.Length )
                 {
-                    textDisplay.text = "";
                     LoadMenuScene(); 
                 }
                 

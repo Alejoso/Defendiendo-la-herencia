@@ -1,17 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
-
 public class GameProgression : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemy;
     //Player
 
-    private PlayerController playerController; 
+    private PlayerController playerController;
 
     // See where the player is positioned and the objectives
     [SerializeField] public string playerLocation;
@@ -22,13 +19,13 @@ public class GameProgression : MonoBehaviour
     [SerializeField] private string[] keyLocations;
     [SerializeField] private int indexKeyLocation;
 
-    public bool didPlayerCompleteObjective; 
+    public bool didPlayerCompleteObjective;
 
 
     //Wave interaction variables
     private int randomWaveAdd;
     [SerializeField] private int minWave;
-    [SerializeField] private int totalWaves; 
+    [SerializeField] private int totalWaves;
     [SerializeField] private int currentWave;
     [SerializeField] private bool canSpawnWave;
 
@@ -46,11 +43,11 @@ public class GameProgression : MonoBehaviour
 
     [SerializeField] private float typeSpeed;
 
-    private string fullText;  
+    private string fullText;
 
 
     //Information for the player
-    [SerializeField] private GameObject currentWaveObject; 
+    [SerializeField] private GameObject currentWaveObject;
     [SerializeField] private TextMeshProUGUI currentObjectiveText;
     [SerializeField] private TextMeshProUGUI currentWaveText;
     [SerializeField] private GameObject arrowToObjective;
@@ -60,16 +57,18 @@ public class GameProgression : MonoBehaviour
 
     //Shootgun
 
-    [SerializeField] GameObject shotgun; 
+    [SerializeField] GameObject shotgun;
+
+    [SerializeField] private Animator transition; 
 
 
     void Awake()
     {
         cam = Camera.main;
 
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>(); 
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         playerLocationTextAnimator = GameObject.Find("Place Titles").GetComponent<Animator>();
-        currentWave = 1; 
+        currentWave = 1;
         //Set the first location to grandpa's house
         indexKeyLocation = 0;
         currentObjective = keyLocations[indexKeyLocation];
@@ -77,7 +76,7 @@ public class GameProgression : MonoBehaviour
         //Set variables for porgression
         didPlayerCompleteObjective = true;
 
-        StartTyping( "Objetivo: " + currentObjective); 
+        StartTyping("Objetivo: " + currentObjective);
 
         currentWaveObject.SetActive(false);
 
@@ -88,7 +87,7 @@ public class GameProgression : MonoBehaviour
         hasPlayerChangedLocation = true;
 
         shotgun.SetActive(false);
-        currentWaveObject.SetActive(false); 
+        currentWaveObject.SetActive(false);
 
     }
 
@@ -105,8 +104,8 @@ public class GameProgression : MonoBehaviour
             currentWaveObject.SetActive(true);
             WaveSpawner(currentWave);
         }
-        
-        
+
+
     }
 
     void LateUpdate()
@@ -115,22 +114,22 @@ public class GameProgression : MonoBehaviour
 
         if (currentWave == totalWaves && (currentObjective == playerLocation) && currentEnemies == 0)
         {
-            if(indexKeyLocation == 1)
+            if (indexKeyLocation == 1)
             {
-                ShootgunAppear(); 
+                ShootgunAppear();
             }
 
-            currentWaveObject.SetActive(false); 
+            currentWaveObject.SetActive(false);
 
             currentWave = 1;
             didPlayerCompleteObjective = true;
             indexKeyLocation++;
             currentObjective = keyLocations[indexKeyLocation];
 
-            StartTyping("Objetivo: " + currentObjective); 
+            StartTyping("Objetivo: " + currentObjective);
             arrowToObjectiveAnimator.Play("Arrow appear", 0, 0f);
             arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
-            hasPlayerChangedLocation = true; 
+            hasPlayerChangedLocation = true;
         }
     }
 
@@ -215,7 +214,7 @@ public class GameProgression : MonoBehaviour
         if (indexKeyLocation == 0)
         {
             enemiesToSpawn = currentWave * Random.Range(2, 5);
-            minWave = 5; 
+            minWave = 5;
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
@@ -225,7 +224,7 @@ public class GameProgression : MonoBehaviour
                     enemyToSpawn = enemy[1];
                 } else
                 {
-                    enemyToSpawn = enemy[0]; 
+                    enemyToSpawn = enemy[0];
                 }
 
                 Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
@@ -236,7 +235,7 @@ public class GameProgression : MonoBehaviour
         if (indexKeyLocation == 1)
         {
             enemiesToSpawn = currentWave * Random.Range(3, 5);
-            minWave = 7; 
+            minWave = 7;
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 //Sacar un fantasmita con 50% de probabilidad
@@ -245,7 +244,7 @@ public class GameProgression : MonoBehaviour
                     enemyToSpawn = enemy[1];
                 } else
                 {
-                    enemyToSpawn = enemy[0]; 
+                    enemyToSpawn = enemy[0];
                 }
 
                 Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
@@ -257,52 +256,52 @@ public class GameProgression : MonoBehaviour
         if (indexKeyLocation == 3)
         {
             enemiesToSpawn = currentWave * Random.Range(3, 5);
-            minWave = 10; 
+            minWave = 10;
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 //Sacar una pata sola con 40% , fantasmita con 70% de probabilidad
-                if(Random.value < 0.4)
+                if (Random.value < 0.4)
                 {
-                    enemyToSpawn = enemy[2]; 
+                    enemyToSpawn = enemy[2];
                 }
                 else if (Random.value < 0.7)
                 {
                     enemyToSpawn = enemy[1];
                 } else
                 {
-                    enemyToSpawn = enemy[0]; 
+                    enemyToSpawn = enemy[0];
                 }
 
                 Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
             }
 
         }
-        
+
         //Spawn enemies in Almacen
         if (indexKeyLocation == 4)
         {
             enemiesToSpawn = currentWave * Random.Range(3, 5);
-            minWave = 12; 
+            minWave = 12;
             for (int i = 0; i < enemiesToSpawn; i++)
             {
 
-                if(Random.value < 0.3)
+                if (Random.value < 0.3)
                 {
-                    enemyToSpawn = enemy[3]; 
+                    enemyToSpawn = enemy[3];
                 }
                 else if (Random.value < 0.7)
                 {
                     enemyToSpawn = enemy[2];
                 } else
                 {
-                    enemyToSpawn = enemy[1]; 
+                    enemyToSpawn = enemy[1];
                 }
 
                 Instantiate(enemyToSpawn, GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
             }
         }
-        
+
         canSpawnWave = true;
     }
 
@@ -320,7 +319,7 @@ public class GameProgression : MonoBehaviour
         Vector3 cameraPosition = cam.transform.position;
         Vector3 spawnPosition = new Vector3(cameraPosition.x + offset.x, cameraPosition.y + offset.y, 0);
 
-        Collider2D hit = Physics2D.OverlapCircle(spawnPosition, 0.5f); 
+        Collider2D hit = Physics2D.OverlapCircle(spawnPosition, 0.5f);
 
         //Prevent enemies from spwning out of bounds and from spawning inside an object
         if (spawnPosition.x > 60f || spawnPosition.x < -80f || spawnPosition.y > 60f || spawnPosition.y < -30f)
@@ -328,9 +327,9 @@ public class GameProgression : MonoBehaviour
             return GenerateRandomEnemySpawn();
         }
 
-        if(hit)
+        if (hit)
         {
-            return GenerateRandomEnemySpawn(); 
+            return GenerateRandomEnemySpawn();
         } else
         {
             return spawnPosition;
@@ -348,11 +347,11 @@ public class GameProgression : MonoBehaviour
         indexKeyLocation++;
         arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
         currentObjective = keyLocations[indexKeyLocation];
-        StartTyping("Objetivo: " + currentObjective); 
+        StartTyping("Objetivo: " + currentObjective);
 
     }
 
-        public void StartTyping(string text)
+    public void StartTyping(string text)
     {
         fullText = text;
         StopAllCoroutines();
@@ -367,6 +366,19 @@ public class GameProgression : MonoBehaviour
             currentObjectiveText.text += c;
             yield return new WaitForSeconds(typeSpeed);
         }
+    }
+
+    public void LoadWinScene()
+    {
+        StartCoroutine(LoadLevel(2)); 
+    }
+
+    IEnumerator LoadLevel(int LevelIndex)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1.5f); 
+        UnityEngine.SceneManagement.SceneManager.LoadScene("WinScene");
+
     }
 
 
