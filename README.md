@@ -134,4 +134,33 @@ Cada área completada otorga **+1 slot de mejora** (vida, daño, regeneración, 
 
 ---
 
+# Assets y Créditos (arte, audio, fuentes)
+
+## 🎵 Música
+
+Generación de música con Suno
+
+Crear pistas: https://suno.com/create?wid=default
+
+Guía/ayuda: https://help.suno.com/en/articles/2410177
+
+## 🔈 Efectos de sonido
+
+Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6823">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6823">Pixabay</a>
+
+Sound Effect by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34299">freesound_community</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34299">Pixabay</a>
+
+## 🧩 Tiles/arte y packs
+
+Wooden Fence (cercas de madera): https://spudy-pixlz.itch.io/wooden-fence
+
+Water (animaciones de agua): https://ninjikin.itch.io/water/download/eyJpZCI6ODYzMDQ1LCJleHBpcmVzIjoxNzYxMDg4OTYzfQ%3D%3D.H5MHV507EdbYP6BgsT0cVZ1mYtc%3D
+
+Free Top-Down Forest Pack (bosque top-down): https://raegstudio.itch.io/free-top-down-forest-pack
+
+Pandemonium – Build your own Top-Down Shooter in Unity (recursos/plantillas): https://craftpix.net/freebies/pandemonium-build-your-own-top-down-shooter-in-unity/?utm_campaign=SocialNetwork&utm_source=YouTube&utm_medium=PandemoniumGameDev&affiliate=523451
+
+## 🔤 Fuentes
+
+Selección en Google Fonts (estilo pixel): https://fonts.google.com/selection?preview.text=LV%2010&categoryFilters=Appearance:%2FTheme%2FPixel
 
