@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
     [SerializeField] private float dracuPalleteDropProbability;
-    private float dolexProbabillity = 0.03f; 
+    private float dolexProbabillity = 0.06f; 
     private Rigidbody2D rb;
 
     //Player position

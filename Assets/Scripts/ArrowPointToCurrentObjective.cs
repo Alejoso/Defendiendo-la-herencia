@@ -39,6 +39,14 @@ public class ArrowPointToCurrentObjective : MonoBehaviour
             case 3:
                 locationToLook = objective3;
                 break;
+            
+            case 4:
+                locationToLook = objective4;
+                break;
+
+            case 5:
+                locationToLook = objective5;
+                break;
 
             default:
             break;
@@ -48,10 +56,12 @@ public class ArrowPointToCurrentObjective : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, 0); 
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 2, 0);
 
         Vector3 direction = locationToLook.transform.position - player.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle); 
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
+    
+   
 }

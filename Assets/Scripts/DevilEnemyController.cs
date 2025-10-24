@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,6 @@ using UnityEngine.UI;
 public class DevilEnemyController : MonoBehaviour
 {
     //Enemies variables
-    [SerializeField] private Slider healthBar;
     [SerializeField] private float speed;
 
     [SerializeField] private float maxHealth;
@@ -37,16 +37,22 @@ public class DevilEnemyController : MonoBehaviour
     [SerializeField] private float tackleInterval = 10f; // seconds between tackles
     [SerializeField] private float backOffDuration = 1.0f; // charge back time (required 1s)
     [SerializeField] private float backOffDistance = 2.0f; // how far to move backward during charge
-    [SerializeField] private float dashSpeed = 20f; // how fast to dash to the kept position
+    [SerializeField] private float dashSpeed = 30f; // how fast to dash to the kept position
     [SerializeField] private string tackleStateName = "Tackle"; // Animator state name
     private float tackleTimer = 0f;
     private bool isPerformingTackle = false;
+
+    //Life UI
+    [SerializeField] private Image healthBar;
+    [SerializeField] private TextMeshProUGUI currentHealthText; 
 
     void Awake()
     {
         //Organize values to the health bar slider
         health = maxHealth;
-        healthBar.value = 1;
+        healthBar.fillAmount = 1;
+        currentHealthText.text = health + " / " + maxHealth; 
+
 
         player = GameObject.Find("Player").GetComponent<Transform>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -95,6 +101,12 @@ public class DevilEnemyController : MonoBehaviour
         if (health <= 0)
         {
             Death();
+        }
+
+        if (health <= 3000)
+        {
+            tackleInterval /= 2;
+            attackInterval /= 2; 
         }
     }
 
@@ -218,6 +230,8 @@ public class DevilEnemyController : MonoBehaviour
 
     void UpdateSlider()
     {
-        healthBar.value = health / maxHealth;
+        healthBar.fillAmount = health / maxHealth;
+        currentHealthText.text = health + " / " + maxHealth; 
+
     }
 }

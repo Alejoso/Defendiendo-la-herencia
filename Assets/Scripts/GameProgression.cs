@@ -82,9 +82,7 @@ public class GameProgression : MonoBehaviour
         currentWaveObject.SetActive(false);
 
         arrowPointToCurrentObjective = arrowToObjective.transform.Find("ArrowImage").GetComponent<ArrowPointToCurrentObjective>();
-        Debug.Log("Aqui");
         arrowToObjectiveAnimator = arrowToObjective.transform.Find("ArrowImage").GetComponent<Animator>();
-        Debug.Log("Aqui dos"); 
         arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
 
         hasPlayerChangedLocation = true;
@@ -128,7 +126,7 @@ public class GameProgression : MonoBehaviour
             currentObjective = keyLocations[indexKeyLocation];
 
             StartTyping("Objetivo: " + currentObjective); 
-            arrowToObjective.SetActive(true); 
+            arrowToObjectiveAnimator.Play("Arrow appear", 0, 0f);
             arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
             hasPlayerChangedLocation = true; 
         }
@@ -157,7 +155,7 @@ public class GameProgression : MonoBehaviour
         {
             //Start new rounds
             hasPlayerChangedLocation = false;
-            DisableWithAnimation(); 
+            arrowToObjectiveAnimator.Play("Arrow fade", 0, 0f);
             didPlayerCompleteObjective = false;
             GenerateWaveCounts();
             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
@@ -254,7 +252,7 @@ public class GameProgression : MonoBehaviour
         }
 
         //Spawn enemies in Lago
-        if (indexKeyLocation == 2)
+        if (indexKeyLocation == 3)
         {
             enemiesToSpawn = currentWave * Random.Range(2, 5);
             minWave = 10; 
@@ -280,7 +278,7 @@ public class GameProgression : MonoBehaviour
         }
         
         //Spawn enemies in Almacen
-        if (indexKeyLocation == 3)
+        if (indexKeyLocation == 4)
         {
             enemiesToSpawn = currentWave * Random.Range(2, 5);
             minWave = 12; 
@@ -307,7 +305,7 @@ public class GameProgression : MonoBehaviour
     }
 
     //Generate enemies on a circle around the player
-    Vector3 GenerateRandomEnemySpawn()
+    public Vector3 GenerateRandomEnemySpawn()
     {
         //Generate random values
         float angle = Random.Range(0f, 360f) * Mathf.Rad2Deg;
@@ -350,18 +348,6 @@ public class GameProgression : MonoBehaviour
         currentObjective = keyLocations[indexKeyLocation];
         StartTyping("Objetivo: " + currentObjective); 
 
-    }
-    
-    public void DisableWithAnimation()
-    {
-        arrowToObjectiveAnimator.Play("Arrow fade" , 0 ,0f); 
-        StartCoroutine(DisableAfterAnimation());
-    }
-
-    IEnumerator DisableAfterAnimation()
-    {
-        yield return new WaitForSeconds(0.6f);
-        arrowToObjective.SetActive(false);
     }
 
         public void StartTyping(string text)

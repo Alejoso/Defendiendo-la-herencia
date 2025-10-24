@@ -3,7 +3,9 @@ using UnityEngine.UI;
 
 public class bossFightStart : MonoBehaviour
 {
-    private GameProgression gameProgression; 
+    private GameProgression gameProgression;
+
+    [SerializeField] private GameObject[] enemy; 
 
     [Header("Boss Fight Effects")]
     [SerializeField] private ParticleSystem bossParticleEffect;
@@ -57,7 +59,7 @@ public class bossFightStart : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !bossTriggered && gameProgression.currentObjective == "Vengar al abuelo" )
+        if (other.CompareTag("Player") && !bossTriggered && gameProgression.currentObjective == "Vengar al abuelo")
         {
             bossTriggered = true;
             Debug.Log("Boss Fight Started!");
@@ -75,6 +77,9 @@ public class bossFightStart : MonoBehaviour
                 Debug.LogWarning("Boss particle effect not assigned!");
             }
         }
+
+        InvokeRepeating("GenerateEnemies" , 8f , 6f); 
+
     }
 
     System.Collections.IEnumerator CameraShake()
@@ -226,5 +231,30 @@ public class bossFightStart : MonoBehaviour
         var cFinal = img.color;
         cFinal.a = to;
         img.color = cFinal;
+    }
+
+     void GenerateEnemies()
+    {
+        int enemiesToSpawn = Random.Range(5, 8);
+        GameObject enemyToSpawn; 
+        for(int i = 0; i < enemiesToSpawn; i++)
+        {
+            if (Random.value < 0.5)
+            {
+                enemyToSpawn = enemy[0];
+                Instantiate(enemyToSpawn, gameProgression.GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
+                return; 
+            }
+            else if (Random.value < 0.7)
+            {
+                enemyToSpawn = enemy[1];
+                Instantiate(enemyToSpawn, gameProgression.GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
+                return; 
+
+            }
+
+        }
+
+
     }
 }

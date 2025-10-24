@@ -107,7 +107,7 @@ MonoBehaviour:
   playerTag: Player
   pickupSfx: {fileID: 8300000, guid: 147b9f89f559e4f4385e0cf8127251ad, type: 3}
   pickupVfx: {fileID: 0}
-  healthQuantity: 10
+  healthQuantity: 15
 --- !u!61 &3604511529160114181
 BoxCollider2D:
   m_ObjectHideFlags: 0
