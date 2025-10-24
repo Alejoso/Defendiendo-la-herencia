@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class bossFightStart : MonoBehaviour
 {
+    private GameProgression gameProgression; 
+
     [Header("Boss Fight Effects")]
     [SerializeField] private ParticleSystem bossParticleEffect;
     [SerializeField] private GameObject bosslightAppear;
@@ -27,8 +29,10 @@ public class bossFightStart : MonoBehaviour
     private MonoBehaviour cameraController;
     private bool bossTriggered = false;
 
-    void Start()
+    void Awake()
     {
+        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>(); 
+
         mainCamera = Camera.main;
         if (mainCamera != null)
         {
@@ -53,7 +57,7 @@ public class bossFightStart : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !bossTriggered)
+        if (other.CompareTag("Player") && !bossTriggered && gameProgression.currentObjective == "Vengar al abuelo" )
         {
             bossTriggered = true;
             Debug.Log("Boss Fight Started!");

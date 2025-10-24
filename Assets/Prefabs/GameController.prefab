@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4500906481470849519
+--- !u!1 &3988780605349234531
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3413548402855156105}
-  - component: {fileID: 5388316501597476929}
-  - component: {fileID: 1332021675511483839}
-  - component: {fileID: 7126171882147620447}
+  - component: {fileID: 7609922533439054619}
+  - component: {fileID: 9019859109890756299}
+  - component: {fileID: 1130610187071437295}
+  - component: {fileID: 698688983802118214}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -19,13 +19,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3413548402855156105
+--- !u!4 &7609922533439054619
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500906481470849519}
+  m_GameObject: {fileID: 3988780605349234531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.544767, y: 0.34907135, z: 0.9175155}
@@ -34,13 +34,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5388316501597476929
+--- !u!114 &9019859109890756299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500906481470849519}
+  m_GameObject: {fileID: 3988780605349234531}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b28275f04c96a7141ad99cb0ddf3478a, type: 3}
@@ -54,13 +54,13 @@ MonoBehaviour:
   skillMenu: {fileID: 0}
   levelUpSFX: {fileID: 8300000, guid: af3ae9747d0dc5a46ba3187c80cb55f1, type: 3}
   audioSource: {fileID: 0}
---- !u!82 &1332021675511483839
+--- !u!82 &1130610187071437295
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500906481470849519}
+  m_GameObject: {fileID: 3988780605349234531}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -151,13 +151,13 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7126171882147620447
+--- !u!114 &698688983802118214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4500906481470849519}
+  m_GameObject: {fileID: 3988780605349234531}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 887f4fa5eff120e4b948847d4a2edf1c, type: 3}
@@ -173,9 +173,11 @@ MonoBehaviour:
   keyLocations:
   - Casa del abuelo
   - El Taller
+  - Coger la escopeta
   - Lago
   - El Almacen
-  - ???
+  - Vengar al abuelo
+  indexKeyLocation: 0
   didPlayerCompleteObjective: 0
   minWave: 3
   totalWaves: 0
@@ -183,6 +185,9 @@ MonoBehaviour:
   minSpawnDistance: 12
   maxSpawnDistance: 15
   playerLocationText: {fileID: 0}
+  typeSpeed: 0.05
+  currentWaveObject: {fileID: 0}
   currentObjectiveText: {fileID: 0}
   currentWaveText: {fileID: 0}
   arrowToObjective: {fileID: 0}
+  shotgun: {fileID: 0}
