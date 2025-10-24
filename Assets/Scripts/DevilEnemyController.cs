@@ -41,17 +41,24 @@ public class DevilEnemyController : MonoBehaviour
     [SerializeField] private string tackleStateName = "Tackle"; // Animator state name
     private float tackleTimer = 0f;
     private bool isPerformingTackle = false;
+    private bool hasNotChanged = false;
 
     //Life UI
     [SerializeField] private Image healthBar;
-    [SerializeField] private TextMeshProUGUI currentHealthText; 
+    [SerializeField] private TextMeshProUGUI currentHealthText;
+
+    [Header("Death Effects")]
+    [SerializeField] private ParticleSystem bloodParticleSystem;
+    [SerializeField] private float deathShakeIntensity = 0.2f;
+    [SerializeField] private float deathShakeDuration = 5f;
+    private bool isDying = false;
 
     void Awake()
     {
         //Organize values to the health bar slider
         health = maxHealth;
         healthBar.fillAmount = 1;
-        currentHealthText.text = health + " / " + maxHealth; 
+        currentHealthText.text = health + " / " + maxHealth;
 
 
         player = GameObject.Find("Player").GetComponent<Transform>();
@@ -103,10 +110,11 @@ public class DevilEnemyController : MonoBehaviour
             Death();
         }
 
-        if (health <= 3000)
+        if (health <= 3000 && !hasNotChanged)
         {
+            hasNotChanged = true;
             tackleInterval /= 2;
-            attackInterval /= 2; 
+            attackInterval /= 2;
         }
     }
 
@@ -195,9 +203,48 @@ public class DevilEnemyController : MonoBehaviour
 
     void Death()
     {
+        if (isDying) return; // Prevent multiple calls
+        isDying = true;
+
+        // Stop all movement
+        rb.linearVelocity = Vector2.zero;
+        speed = 0f;
+        isPerformingTackle = true; // Prevent further actions
+
+        // Play blood particle effect
+        if (bloodParticleSystem != null)
+        {
+            bloodParticleSystem.Play();
+        }
+
+        // Drop loot
         if (Random.value <= dracuPalleteDropProbability)
             Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation);
-        Destroy(gameObject);
+
+        // Start death sequence with shake
+        StartCoroutine(DeathSequence());
+    }
+
+    System.Collections.IEnumerator DeathSequence()
+    {
+        Vector3 originalPosition = transform.position;
+        float elapsed = 0f;
+
+        // Shake for deathShakeDuration (5 seconds)
+        while (elapsed < deathShakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * deathShakeIntensity;
+            float y = Random.Range(-1f, 1f) * deathShakeIntensity;
+            transform.position = originalPosition + new Vector3(x, y, 0f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Return to original position
+        transform.position = originalPosition;
+
+        // Load WinScene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("WinScene");
     }
 
     //When it collides with a bullet do..
@@ -231,7 +278,7 @@ public class DevilEnemyController : MonoBehaviour
     void UpdateSlider()
     {
         healthBar.fillAmount = health / maxHealth;
-        currentHealthText.text = health + " / " + maxHealth; 
+        currentHealthText.text = health + " / " + maxHealth;
 
     }
 }

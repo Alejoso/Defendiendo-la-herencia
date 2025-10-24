@@ -64,7 +64,7 @@ public class bossFightStart : MonoBehaviour
             bossTriggered = true;
             Debug.Log("Boss Fight Started!");
 
-            InvokeRepeating("GenerateEnemies", 20f, 10f);
+            InvokeRepeating("GenerateEnemies", 20f, 7f);
 
             // Play boss music from this object's AudioSource
             var audioSource = GetComponent<AudioSource>();
