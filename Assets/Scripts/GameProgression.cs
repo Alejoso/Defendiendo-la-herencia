@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI; 
@@ -7,7 +9,6 @@ using UnityEngine.UI;
 public class GameProgression : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemy;
-
     //Player
 
     private PlayerController playerController; 
@@ -19,7 +20,7 @@ public class GameProgression : MonoBehaviour
     private bool hasPlayerChangedLocation;
 
     [SerializeField] private string[] keyLocations;
-    private int indexKeyLocation;
+    [SerializeField] private int indexKeyLocation;
 
     public bool didPlayerCompleteObjective; 
 
@@ -43,10 +44,18 @@ public class GameProgression : MonoBehaviour
     private Animator playerLocationTextAnimator;
     [SerializeField] private TextMeshProUGUI playerLocationText;
 
+    [SerializeField] private float typeSpeed;
+
+    private string fullText;  
+
+
     //Information for the player
+    [SerializeField] private GameObject currentWaveObject; 
     [SerializeField] private TextMeshProUGUI currentObjectiveText;
     [SerializeField] private TextMeshProUGUI currentWaveText;
     [SerializeField] private GameObject arrowToObjective;
+    private Animator arrowToObjectiveAnimator;
+
     private ArrowPointToCurrentObjective arrowPointToCurrentObjective;
 
     //Shootgun
@@ -68,17 +77,20 @@ public class GameProgression : MonoBehaviour
         //Set variables for porgression
         didPlayerCompleteObjective = true;
 
-        currentObjectiveText.text = "Objetivo: " + currentObjective;
+        StartTyping( "Objetivo: " + currentObjective); 
 
-        currentWaveText.text = "";
+        currentWaveObject.SetActive(false);
 
         arrowPointToCurrentObjective = arrowToObjective.transform.Find("ArrowImage").GetComponent<ArrowPointToCurrentObjective>();
-
+        Debug.Log("Aqui");
+        arrowToObjectiveAnimator = arrowToObjective.transform.Find("ArrowImage").GetComponent<Animator>();
+        Debug.Log("Aqui dos"); 
         arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
 
         hasPlayerChangedLocation = true;
 
-        shotgun.SetActive(false); 
+        shotgun.SetActive(false);
+        currentWaveObject.SetActive(false); 
 
     }
 
@@ -90,7 +102,9 @@ public class GameProgression : MonoBehaviour
         {
             canSpawnWave = false;
             currentWave++;
+            currentWaveObject.SetActive(false); 
             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
+            currentWaveObject.SetActive(true); 
             WaveSpawner(currentWave);
         }
     }
@@ -106,12 +120,14 @@ public class GameProgression : MonoBehaviour
                 ShootgunAppear(); 
             }
 
-            currentWaveText.text = ""; 
+            currentWaveObject.SetActive(false); 
+
             currentWave = 1;
             didPlayerCompleteObjective = true;
             indexKeyLocation++;
             currentObjective = keyLocations[indexKeyLocation];
-            currentObjectiveText.text = "Objetivo: " + currentObjective;
+
+            StartTyping("Objetivo: " + currentObjective); 
             arrowToObjective.SetActive(true); 
             arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
             hasPlayerChangedLocation = true; 
@@ -141,14 +157,15 @@ public class GameProgression : MonoBehaviour
         {
             //Start new rounds
             hasPlayerChangedLocation = false;
-            arrowToObjective.SetActive(false);
+            DisableWithAnimation(); 
             didPlayerCompleteObjective = false;
-            GenerateWaveCounts(); 
+            GenerateWaveCounts();
             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
+            currentWaveObject.SetActive(true);
 
             WaveSpawner(currentWave);
 
-            currentObjectiveText.text = "Objetivo: Defiende " + currentObjective;
+            StartTyping("Objetivo: Defender " + currentObjective);
         }
 
     }
@@ -324,6 +341,44 @@ public class GameProgression : MonoBehaviour
     void ShootgunAppear()
     {
         shotgun.SetActive(true);
+    }
+
+    public void AddOneToIndexKeyLocation()
+    {
+        indexKeyLocation++;
+        arrowPointToCurrentObjective.changeCurrentObjetive(indexKeyLocation);
+        currentObjective = keyLocations[indexKeyLocation];
+        StartTyping("Objetivo: " + currentObjective); 
+
+    }
+    
+    public void DisableWithAnimation()
+    {
+        arrowToObjectiveAnimator.Play("Arrow fade" , 0 ,0f); 
+        StartCoroutine(DisableAfterAnimation());
+    }
+
+    IEnumerator DisableAfterAnimation()
+    {
+        yield return new WaitForSeconds(0.6f);
+        arrowToObjective.SetActive(false);
+    }
+
+        public void StartTyping(string text)
+    {
+        fullText = text;
+        StopAllCoroutines();
+        StartCoroutine(TypeText());
+    }
+
+    private IEnumerator TypeText()
+    {
+        currentObjectiveText.text = "";
+        foreach (char c in fullText)
+        {
+            currentObjectiveText.text += c;
+            yield return new WaitForSeconds(typeSpeed);
+        }
     }
 
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4841490921158200422}
   - component: {fileID: 5412954546816796394}
   - component: {fileID: 7645333122587522926}
-  - component: {fileID: 495598406209415832}
+  - component: {fileID: 2102165895825146913}
   m_Layer: 0
   m_Name: DracuPalette
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.6445785, y: -0.0845719, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7790557, y: 0.7790557, z: 0.7790557}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7325020496033074171, guid: 74ffc2a62afa256408cbf75a339de933, type: 3}
+  m_Sprite: {fileID: 1835422705107404458, guid: 8b4c82579bbaf93429c12ee7605ed239, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,8 +108,8 @@ MonoBehaviour:
   pickupSfx: {fileID: 8300000, guid: b93a46a57c3ec8d4895603532ff67963, type: 3}
   pickupVfx: {fileID: 0}
   xpQuantity: 25
---- !u!58 &495598406209415832
-CircleCollider2D:
+--- !u!61 &2102165895825146913
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -142,5 +142,15 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.46875
+  m_Offset: {x: 0.007140398, y: -0.0017843246}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.68266666, y: 1.024}
+    newSize: {x: 0.84375, y: 0.9375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.37295246, y: 0.9133167}
+  m_EdgeRadius: 0

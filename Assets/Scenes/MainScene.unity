@@ -2238,6 +2238,37 @@ MonoBehaviour:
   maxDistance: 5
   nearColor: {r: 1, g: 0, b: 0, a: 0.8}
   farColor: {r: 1, g: 0, b: 0, a: 0.1}
+--- !u!1 &326628345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 326628346}
+  m_Layer: 0
+  m_Name: Boss
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &326628346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326628345}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.1, y: 14.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &347260611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3215,6 +3246,7 @@ GameObject:
   - component: {fileID: 499869792}
   - component: {fileID: 499869794}
   - component: {fileID: 499869793}
+  - component: {fileID: 499869795}
   m_Layer: 5
   m_Name: Current wave text
   m_TagString: Untagged
@@ -3340,6 +3372,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499869791}
   m_CullTransparentMesh: 1
+--- !u!95 &499869795
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499869791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e8fa29c8cc72588479b7cf6df234ec83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &516160662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,8 +4237,11 @@ MonoBehaviour:
   keyLocations:
   - Casa del abuelo
   - El Taller
+  - Coger la escopeta
   - Lago
   - El Almacen
+  - Vengar al abuelo
+  indexKeyLocation: 0
   didPlayerCompleteObjective: 0
   minWave: 3
   totalWaves: 0
@@ -4192,6 +4249,7 @@ MonoBehaviour:
   minSpawnDistance: 12
   maxSpawnDistance: 15
   playerLocationText: {fileID: 1643300775}
+  currentWaveObject: {fileID: 474815715}
   currentObjectiveText: {fileID: 92675986}
   currentWaveText: {fileID: 499869793}
   arrowToObjective: {fileID: 2002417312}
@@ -6470,6 +6528,7 @@ GameObject:
   - component: {fileID: 1117060305}
   - component: {fileID: 1117060304}
   - component: {fileID: 1117060306}
+  - component: {fileID: 1117060307}
   m_Layer: 5
   m_Name: ArrowImage
   m_TagString: Untagged
@@ -6486,7 +6545,7 @@ RectTransform:
   m_GameObject: {fileID: 1117060302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.012492918, y: 0.012492918, z: 0.012492918}
+  m_LocalScale: {x: 0.012492918, y: 0.01249292, z: 0.01249292}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2002417313}
@@ -6548,8 +6607,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objective0: {fileID: 1465461372}
   objective1: {fileID: 886634168}
-  objective2: {fileID: 1678014966}
-  objective3: {fileID: 1202760517}
+  objective2: {fileID: 1889455424}
+  objective3: {fileID: 1678014966}
+  objective4: {fileID: 1202760517}
+  objective5: {fileID: 326628345}
+--- !u!95 &1117060307
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117060302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21860605300114740a915c5faf8da237, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1129874544
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,7 +8476,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -3.7999268, y: 6.799988}
+  m_AnchoredPosition: {x: -3.8000488, y: 6.800049}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1554950810
@@ -9408,6 +9491,7 @@ GameObject:
   - component: {fileID: 1889455426}
   - component: {fileID: 1889455425}
   - component: {fileID: 1889455428}
+  - component: {fileID: 1889455429}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -9547,6 +9631,28 @@ MonoBehaviour:
   pistolUI: {fileID: 878304518}
   shotgunUI: {fileID: 516160662}
   shotgunGrab: {fileID: 0}
+--- !u!95 &1889455429
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889455424}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0baae2bb0efddea4f83f9115c43415fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1921660711
 GameObject:
   m_ObjectHideFlags: 0
@@ -10714,11 +10820,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6204320413568222676, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.82
+      value: -33.7
       objectReference: {fileID: 0}
     - target: {fileID: 6204320413568222676, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -29.86
+      value: 18.7
       objectReference: {fileID: 0}
     - target: {fileID: 6204320413568222676, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10853,3 +10959,4 @@ SceneRoots:
   - {fileID: 474600315}
   - {fileID: 4474175008158081989}
   - {fileID: 1889455427}
+  - {fileID: 326628346}

@@ -8,6 +8,9 @@ public class ArrowPointToCurrentObjective : MonoBehaviour
     [SerializeField] GameObject objective1;
     [SerializeField] GameObject objective2;
     [SerializeField] GameObject objective3;
+    [SerializeField] GameObject objective4;
+    [SerializeField] GameObject objective5;
+
 
 
     private GameObject locationToLook; 

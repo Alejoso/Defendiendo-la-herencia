@@ -394,9 +394,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spotLight: {fileID: 0}
   autoFlicker: 1
-  minIntensity: 0.7
+  minIntensity: 0.3
   maxIntensity: 1.44
-  flickerSpeed: 3
+  flickerSpeed: 2.5
   usePerlinNoise: 1
 --- !u!114 &7273355887098848601
 MonoBehaviour:
