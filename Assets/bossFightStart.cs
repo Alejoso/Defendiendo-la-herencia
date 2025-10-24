@@ -5,8 +5,11 @@ public class bossFightStart : MonoBehaviour
 {
     [Header("Boss Fight Effects")]
     [SerializeField] private ParticleSystem bossParticleEffect;
+    [SerializeField] private GameObject bosslightAppear;
+    [SerializeField] private GameObject rainEffect;
     [SerializeField] private float cameraShakeDuration = 2f;
     [SerializeField] private float cameraShakeIntensity = 0.5f;
+    [SerializeField] private float cameraMoveToPositionDuration = 1.5f;
 
     [Header("Boss Spawn")]
     [Tooltip("Boss prefab to instantiate after the intro finishes.")]
@@ -78,11 +81,34 @@ public class bossFightStart : MonoBehaviour
             cameraController.enabled = false;
         }
 
-        // Set camera to specific position for boss fight
+        // Gradually move camera to specific position for boss fight
         if (mainCamera != null)
         {
-            Vector3 bossPosition = new Vector3(-6.92f, 14.98f, mainCamera.transform.position.z);
-            mainCamera.transform.position = bossPosition;
+            Vector3 startPosition = mainCamera.transform.position;
+            Vector3 targetPosition = new Vector3(-6.92f, 14.98f, mainCamera.transform.position.z);
+            float moveElapsed = 0f;
+
+            while (moveElapsed < cameraMoveToPositionDuration)
+            {
+                moveElapsed += Time.deltaTime;
+                float t = moveElapsed / cameraMoveToPositionDuration;
+                // Smooth interpolation
+                mainCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                yield return null;
+            }
+
+            // Ensure exact final position
+            mainCamera.transform.position = targetPosition;
+        }
+
+        // Activate boss light appearance effect
+        if (bosslightAppear != null)
+        {
+            bosslightAppear.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Boss light appearance effect not assigned!");
         }
 
         // Store this position for shaking
@@ -126,6 +152,26 @@ public class bossFightStart : MonoBehaviour
         {
             // No fade image assigned, just spawn immediately
             TrySpawnBoss();
+        }
+
+        // Disable light
+        if (bosslightAppear != null)
+        {
+            bosslightAppear.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Boss light appearance effect not assigned!");
+        }
+
+        // Activate rain effect
+        if (rainEffect != null)
+        {
+            rainEffect.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Rain effect not assigned!");
         }
 
         // Re-enable CameraController after transition
