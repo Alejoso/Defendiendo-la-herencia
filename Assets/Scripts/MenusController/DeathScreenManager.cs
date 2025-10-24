@@ -170,7 +170,7 @@ public class DeathScreenManager : MonoBehaviour
 
     public void LoadMenuScene()
     {
-        StartCoroutine(LoadLevel(1)); 
+        StartCoroutine(LoadLevel(0)); 
     }
 
     public void LoadMainGame()

@@ -271,6 +271,7 @@ public class DevilEnemyController : MonoBehaviour
 
     void TakeDamage(int damage)
     {
+        if ((health -= damage) < 0) return; 
         health -= damage;
         UpdateSlider();
     }

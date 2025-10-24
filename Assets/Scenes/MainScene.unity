@@ -3738,6 +3738,8 @@ MonoBehaviour:
   whiteScreenImage: {fileID: 2081235742}
   fadeInDuration: 1
   fadeOutDuration: 1
+  arrowLastAnimator: {fileID: 1117060307}
+  currentObjective: {fileID: 1620528160}
 --- !u!61 &581839274
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20064,7 +20066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pistolUI: {fileID: 878304518}
   shotgunUI: {fileID: 516160662}
-  shotgunGrab: {fileID: 0}
+  shotgunGrab: {fileID: 8300000, guid: c5af58ab323b65541b0b3036a1bacb37, type: 3}
 --- !u!95 &1889455429
 Animator:
   serializedVersion: 7

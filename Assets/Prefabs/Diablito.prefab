@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3040310630910125420}
   - component: {fileID: 5979279583659361085}
   - component: {fileID: 3286281906321104626}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Diablito
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -151,6 +151,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   raycastDistance: 3
+  separationRadius: 1
+  separationForce: 2
+  raycastAngles: 8
   dracuPallete: {fileID: 1010471504206957112, guid: 05967e74b99c2324084add09661294f5, type: 3}
   dolex: {fileID: 978053413663683065, guid: 14818e6c7cfc1cf4c8d2d96f186de090, type: 3}
 --- !u!50 &5979279583659361085

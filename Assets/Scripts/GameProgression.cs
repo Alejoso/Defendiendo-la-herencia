@@ -186,7 +186,7 @@ public class GameProgression : MonoBehaviour
             return;
         }
 
-        if (indexKeyLocation == 2)
+        if (indexKeyLocation == 3)
         {
             minWave = 10;
             randomWaveAdd = Random.Range(3, 4); //Generate a random wave to add to the min waves
@@ -194,7 +194,7 @@ public class GameProgression : MonoBehaviour
             return;
         }
 
-        if (indexKeyLocation == 3)
+        if (indexKeyLocation == 4)
         {
             minWave = 12;
             randomWaveAdd = Random.Range(3, 6); //Generate a random wave to add to the min waves
@@ -254,7 +254,7 @@ public class GameProgression : MonoBehaviour
         //Spawn enemies in Lago
         if (indexKeyLocation == 3)
         {
-            enemiesToSpawn = currentWave * Random.Range(2, 5);
+            enemiesToSpawn = currentWave * Random.Range(3, 5);
             minWave = 10; 
 
             for (int i = 0; i < enemiesToSpawn; i++)
@@ -280,7 +280,7 @@ public class GameProgression : MonoBehaviour
         //Spawn enemies in Almacen
         if (indexKeyLocation == 4)
         {
-            enemiesToSpawn = currentWave * Random.Range(2, 5);
+            enemiesToSpawn = currentWave * Random.Range(3, 5);
             minWave = 12; 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
