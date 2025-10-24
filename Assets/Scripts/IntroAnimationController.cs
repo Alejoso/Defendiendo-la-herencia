@@ -27,12 +27,20 @@ public class IntroAnimationController : MonoBehaviour
     [SerializeField] private Sprite[] abueloFaces;
     [SerializeField] private Image abuelo; 
 
-    void Start()
+    [SerializeField] private GameObject canvasTransition;
+    private Animator transition;
+
+    [SerializeField] private float transitionTime; 
+
+
+    void Awake()
     {
         textIndex = 0;
         StartTyping(texts[textIndex]);
         interaction.SetActive(false);
         buttonInteracion.SetActive(false); 
+        transition = canvasTransition.GetComponent<Animator>(); 
+
     }
 
    void Update()
@@ -173,7 +181,7 @@ public class IntroAnimationController : MonoBehaviour
 
     public void LoadGame()
     {
-        SceneManager.LoadScene(2); //Load game
+        LoadMainGame(); //Load game
     }
     public void StartTypingBadResponse(string text)
     {
@@ -193,12 +201,25 @@ public class IntroAnimationController : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed);
         }
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(2); 
+        LoadMainGame();
     }
     public void Badresponse()
     {
         abuelo.sprite = abueloFaces[2];
         desition.SetActive(false);
         StartTypingBadResponse("Mijo, ¿usted se apendejó o es que ese tistos lo está controlando mucho? Vaya, pues, mijo, y me hace el cruce.");
+    }
+
+    public void LoadMainGame()
+    {
+        StartCoroutine(LoadLevel(2)); 
+    }
+
+    IEnumerator LoadLevel(int LevelIndex)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(transitionTime); 
+        SceneManager.LoadScene(LevelIndex);
+
     }
 }
