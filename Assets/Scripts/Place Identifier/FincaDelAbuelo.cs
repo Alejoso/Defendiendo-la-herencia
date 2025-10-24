@@ -41,12 +41,4 @@ public class FincaDelAbuelo : MonoBehaviour
     }
     
 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            gameProgression.ChangePlayerLocation("");
-        }
-    }
-
 }

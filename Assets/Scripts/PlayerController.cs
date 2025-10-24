@@ -475,7 +475,10 @@ public class PlayerController : MonoBehaviour
     
     public void ChangeToShootgun()
     {
-        weapon = WeaponType.Shotgun; 
+        weapon = WeaponType.Shotgun;
+        SwitchToMelee();
+        SwitchToRevolver(); 
+        meleeLockoutTimer = 0.1f; 
     }
 
 
