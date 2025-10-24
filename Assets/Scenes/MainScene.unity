@@ -21392,6 +21392,10 @@ PrefabInstance:
       propertyPath: reloadImage
       value: 
       objectReference: {fileID: 21496779}
+    - target: {fileID: 8767463313453830328, guid: fc3d94aa425661d46ba9c4fc7cbbd537, type: 3}
+      propertyPath: deathOverlayImage
+      value: 
+      objectReference: {fileID: 2081235742}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -92,6 +92,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Image reloadImage;
 
+    [Header("Death Overlay")]
+    [SerializeField] private Image deathOverlayImage;
+    private bool isDead = false;
+
 
     void Awake()
     {
@@ -478,10 +482,41 @@ public class PlayerController : MonoBehaviour
     //Take damage and update slider
     void TakeDamage(float damage)
     {
+        if (isDead) return;
         currentHealth -= damage;
         healthBar.value = currentHealth / maxHealth;
         healthText.text = currentHealth + "/" + maxHealth;
-        StartCoroutine(InnmunityFrameTimer());
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+            StartCoroutine(DeathSequence());
+        }
+        else
+        {
+            StartCoroutine(InnmunityFrameTimer());
+        }
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        // Fade in the death overlay image in red
+        if (deathOverlayImage != null)
+        {
+            deathOverlayImage.gameObject.SetActive(true);
+            Color startColor = new Color(1f, 0f, 0f, 0f); // transparent red
+            Color endColor = new Color(1f, 0f, 0f, 1f);   // opaque red
+            float fadeDuration = 0.7f;
+            float t = 0f;
+            while (t < fadeDuration)
+            {
+                t += Time.deltaTime;
+                deathOverlayImage.color = Color.Lerp(startColor, endColor, t / fadeDuration);
+                yield return null;
+            }
+            deathOverlayImage.color = endColor;
+        }
+        yield return new WaitForSeconds(2f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("DeathScene");
     }
 
     //Co-rutine for InmmunityFrames
