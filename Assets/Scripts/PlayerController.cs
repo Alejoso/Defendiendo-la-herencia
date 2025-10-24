@@ -96,7 +96,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image deathOverlayImage;
     private bool isDead = false;
 
+    [SerializeField] private TextMeshProUGUI bulletCount;
 
+    private bool isReloading = false;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -131,6 +133,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+        {
+            Reload();
+            currentAmmo = 0;
+        }
+        
+        bulletCount.text = currentAmmo.ToString();
+
+    }
     void FixedUpdate()
     {
         MovePlayer();
@@ -138,6 +152,7 @@ public class PlayerController : MonoBehaviour
         HandleWeaponSystem();
         UpdateMuzzleFlash();
         HandleFootstepAudio();
+
     }
 
 
@@ -193,6 +208,7 @@ public class PlayerController : MonoBehaviour
                 // Unlock and return to revolver
                 isLockedInMelee = false;
                 currentAmmo = maxAmmo; // Reload ammo
+                isReloading = false; 
                 SwitchToRevolver();
             }
         }
@@ -266,12 +282,18 @@ public class PlayerController : MonoBehaviour
             // Check if out of ammo
             if (currentAmmo <= 0)
             {
-                SwitchToMelee();
-                isLockedInMelee = true;
-                meleeLockoutTimer = meleeLockoutTime;
-                reloadImage.fillAmount = 1f;
+                Reload(); 
             }
         }
+    }
+    
+    private void Reload()
+    {
+        isReloading = true;
+        SwitchToMelee();
+        isLockedInMelee = true;
+        meleeLockoutTimer = meleeLockoutTime;
+        reloadImage.fillAmount = 1f;
     }
 
     // --- Helpers for shotgun ---

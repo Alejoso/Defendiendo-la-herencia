@@ -30,7 +30,7 @@ public class GameProgression : MonoBehaviour
     [SerializeField] private int minWave;
     [SerializeField] private int totalWaves; 
     [SerializeField] private int currentWave;
-    private bool canSpawnWave;
+    [SerializeField] private bool canSpawnWave;
 
     //Spawn variables
     private Camera cam;
@@ -100,11 +100,13 @@ public class GameProgression : MonoBehaviour
         {
             canSpawnWave = false;
             currentWave++;
-            currentWaveObject.SetActive(false); 
+            currentWaveObject.SetActive(false);
             currentWaveText.text = "Wave " + currentWave + " / " + totalWaves;
-            currentWaveObject.SetActive(true); 
+            currentWaveObject.SetActive(true);
             WaveSpawner(currentWave);
         }
+        
+        
     }
 
     void LateUpdate()

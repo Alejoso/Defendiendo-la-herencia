@@ -53,6 +53,8 @@ public class DevilEnemyController : MonoBehaviour
     [SerializeField] private float deathShakeDuration = 5f;
     private bool isDying = false;
 
+    private DevilEnemyController devilEnemyController;
+
     void Awake()
     {
         //Organize values to the health bar slider
@@ -64,6 +66,8 @@ public class DevilEnemyController : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Transform>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
+
+        devilEnemyController = GetComponent<DevilEnemyController>(); 
     }
 
     // Update is called once per frame
@@ -116,6 +120,7 @@ public class DevilEnemyController : MonoBehaviour
             tackleInterval /= 2;
             attackInterval /= 2;
         }
+
     }
 
     void PlayAlternateAttack()
@@ -206,6 +211,9 @@ public class DevilEnemyController : MonoBehaviour
         if (isDying) return; // Prevent multiple calls
         isDying = true;
 
+        health = 0;
+        UpdateSlider();
+        
         // Stop all movement
         rb.linearVelocity = Vector2.zero;
         speed = 0f;
@@ -216,6 +224,8 @@ public class DevilEnemyController : MonoBehaviour
         {
             bloodParticleSystem.Play();
         }
+
+        devilEnemyController.enabled = false; 
 
         // Drop loot
         if (Random.value <= dracuPalleteDropProbability)
@@ -271,7 +281,7 @@ public class DevilEnemyController : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-        if ((health -= damage) < 0) return; 
+        if ((health -= damage) <= 0) return; 
         health -= damage;
         UpdateSlider();
     }
