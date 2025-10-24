@@ -3799,6 +3799,7 @@ MonoBehaviour:
   whiteScreenImage: {fileID: 2081235742}
   fadeInDuration: 1
   fadeOutDuration: 1
+  arrowLastAnimator: {fileID: 1117060307}
 --- !u!61 &581839274
 BoxCollider2D:
   m_ObjectHideFlags: 0

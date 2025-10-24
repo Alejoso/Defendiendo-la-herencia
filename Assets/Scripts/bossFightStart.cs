@@ -31,6 +31,7 @@ public class bossFightStart : MonoBehaviour
     private MonoBehaviour cameraController;
     private bool bossTriggered = false;
 
+    [SerializeField] private Animator arrowLastAnimator;
     void Awake()
     {
         gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>();
@@ -63,6 +64,8 @@ public class bossFightStart : MonoBehaviour
         {
             bossTriggered = true;
             Debug.Log("Boss Fight Started!");
+
+            arrowLastAnimator.Play("Arrow fade");
 
             InvokeRepeating("GenerateEnemies", 20f, 7f);
 
