@@ -1752,7 +1752,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defendiendo la herencia
+  m_text: Los lamparazos con el diablo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 685a6c53856995a4fb148fa23edaf624, type: 2}
   m_sharedMaterial: {fileID: -465265430874393654, guid: 685a6c53856995a4fb148fa23edaf624, type: 2}
