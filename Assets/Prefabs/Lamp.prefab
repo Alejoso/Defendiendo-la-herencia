@@ -100,9 +100,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spotLight: {fileID: 0}
   autoFlicker: 1
-  minIntensity: 0.49
-  maxIntensity: 4
-  flickerSpeed: 3.68
+  minIntensity: 0.1
+  maxIntensity: 3.5
+  flickerSpeed: 0.6
   usePerlinNoise: 1
 --- !u!212 &2130020726115257021
 SpriteRenderer:

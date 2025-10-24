@@ -5,7 +5,7 @@ public class bossFightStart : MonoBehaviour
 {
     private GameProgression gameProgression;
 
-    [SerializeField] private GameObject[] enemy; 
+    [SerializeField] private GameObject[] enemy;
 
     [Header("Boss Fight Effects")]
     [SerializeField] private ParticleSystem bossParticleEffect;
@@ -33,7 +33,7 @@ public class bossFightStart : MonoBehaviour
 
     void Awake()
     {
-        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>(); 
+        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>();
 
         mainCamera = Camera.main;
         if (mainCamera != null)
@@ -64,6 +64,17 @@ public class bossFightStart : MonoBehaviour
             bossTriggered = true;
             Debug.Log("Boss Fight Started!");
 
+            // Play boss music from this object's AudioSource
+            var audioSource = GetComponent<AudioSource>();
+            if (audioSource != null)
+            {
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("No AudioSource found on bossFightStart object for boss music!");
+            }
+
             // Start camera shake coroutine
             StartCoroutine(CameraShake());
 
@@ -78,8 +89,7 @@ public class bossFightStart : MonoBehaviour
             }
         }
 
-        InvokeRepeating("GenerateEnemies" , 8f , 6f); 
-
+        InvokeRepeating("GenerateEnemies", 10f, 10f);
     }
 
     System.Collections.IEnumerator CameraShake()
@@ -233,23 +243,23 @@ public class bossFightStart : MonoBehaviour
         img.color = cFinal;
     }
 
-     void GenerateEnemies()
+    void GenerateEnemies()
     {
-        int enemiesToSpawn = Random.Range(5, 8);
-        GameObject enemyToSpawn; 
-        for(int i = 0; i < enemiesToSpawn; i++)
+        int enemiesToSpawn = Random.Range(2, 4);
+        GameObject enemyToSpawn;
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
             if (Random.value < 0.5)
             {
                 enemyToSpawn = enemy[0];
                 Instantiate(enemyToSpawn, gameProgression.GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
-                return; 
+                return;
             }
             else if (Random.value < 0.7)
             {
                 enemyToSpawn = enemy[1];
                 Instantiate(enemyToSpawn, gameProgression.GenerateRandomEnemySpawn(), enemyToSpawn.transform.rotation);
-                return; 
+                return;
 
             }
 
