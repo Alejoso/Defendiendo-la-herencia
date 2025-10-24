@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
 public class IntroAnimationController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class IntroAnimationController : MonoBehaviour
     [SerializeField] private GameObject interaction;
 
     [SerializeField] private float typeSpeed = 0.05f;
+
+    [SerializeField] private GameObject desition; 
 
     //Different faces
     [SerializeField] private Sprite[] abueloFaces;
@@ -53,10 +56,16 @@ public class IntroAnimationController : MonoBehaviour
             else if (canContinue)
             {
                 // Si ya terminó → pasar al siguiente texto
+                textIndex++;
 
-                if (textIndex < texts.Length - 1)
+                if (textIndex > texts.Length )
                 {
-                    textIndex++;
+                    textDisplay.text = "";
+                    desition.SetActive(true);
+                }
+                
+                if (textIndex < texts.Length )
+                {
 
                     if (textIndex % 2 == 0)
                     {
@@ -73,14 +82,18 @@ public class IntroAnimationController : MonoBehaviour
                 }
             }
         }
+
+        if (textIndex == 4)
+        {
+            abuelo.sprite = abueloFaces[0];
+        }
+        else if (textIndex < 7)
+        {
+            abuelo.sprite = abueloFaces[1];
+        }
     
-    if(textIndex == 4)
-    {
-        abuelo.sprite = abueloFaces[0]; 
-    } else
-    {
-        abuelo.sprite = abueloFaces[1]; 
-    }
+
+    
 }
 
     void SkipTextAnimation()
@@ -112,6 +125,7 @@ public class IntroAnimationController : MonoBehaviour
         fullText = text;
         StopAllCoroutines();
         StartCoroutine(TypeText());
+        
     }
 
     private IEnumerator TypeText()
@@ -125,6 +139,7 @@ public class IntroAnimationController : MonoBehaviour
         }
         isTyping = false;
         canContinue = true;
+  
     }
 
     public void StartTypingInteraction(string text)
@@ -148,11 +163,42 @@ public class IntroAnimationController : MonoBehaviour
         buttonInteracion.SetActive(true); 
 
     }
-    
+
     public void CanContinue()
     {
         canContinue = true;
-        buttonInteracion.SetActive(false); 
-        
+        buttonInteracion.SetActive(false);
+
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(2); //Load game
+    }
+    public void StartTypingBadResponse(string text)
+    {
+        canContinue = false;
+        fullText = text;
+        StopAllCoroutines();
+        StartCoroutine(TypeTextBadResponse());
+
+    }
+    
+        private IEnumerator TypeTextBadResponse()
+    {
+        textDisplay.text = "";
+        foreach (char c in fullText)
+        {
+            textDisplay.text += c;
+            yield return new WaitForSeconds(typeSpeed);
+        }
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(2); 
+    }
+    public void Badresponse()
+    {
+        abuelo.sprite = abueloFaces[2];
+        desition.SetActive(false);
+        StartTypingBadResponse("Mijo, ¿usted se apendejó o es que ese tistos lo está controlando mucho? Vaya, pues, mijo, y me hace el cruce.");
     }
 }
