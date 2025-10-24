@@ -82,8 +82,11 @@ public class PlayerController : MonoBehaviour
     private AudioSource playerAudioSource;
 
     [SerializeField] private AudioClip shootingSFX;
+    [SerializeField] private AudioClip meleeAttackSFX;
     [Header("Footstep Audio")]
+    [SerializeField] private AudioSource footstepAudioSource;
     [SerializeField] private AudioClip footstepSFX;
+    [SerializeField] private ParticleSystem footstepParticles;
 
     //Player pistol or shotgun UI
 
@@ -313,6 +316,12 @@ public class PlayerController : MonoBehaviour
         // Enable melee collider and animate melee visual swing during the active window
         const float attackDuration = 0.2f; // active hit window duration
 
+        // Play melee attack sound
+        if (meleeAttackSFX != null)
+        {
+            gameControllerAudioSource.PlayOneShot(meleeAttackSFX);
+        }
+
         // Prepare swing visual (optional)
         if (meleeVisualSprite != null)
         {
@@ -406,24 +415,43 @@ public class PlayerController : MonoBehaviour
     {
         bool isMoving = rb.linearVelocity.sqrMagnitude > 0.01f;
 
-        if (playerAudioSource != null && footstepSFX != null)
+        if (footstepAudioSource != null && footstepSFX != null)
         {
             if (isMoving)
             {
                 // Play looping footstep sound if not already playing
-                if (!playerAudioSource.isPlaying)
+                if (!footstepAudioSource.isPlaying)
                 {
-                    playerAudioSource.clip = footstepSFX;
-                    playerAudioSource.loop = true;
-                    playerAudioSource.Play();
+                    footstepAudioSource.clip = footstepSFX;
+                    footstepAudioSource.loop = true;
+                    footstepAudioSource.Play();
                 }
             }
             else
             {
                 // Stop footsteps when not moving
-                if (playerAudioSource.isPlaying)
+                if (footstepAudioSource.isPlaying)
                 {
-                    playerAudioSource.Stop();
+                    footstepAudioSource.Stop();
+                }
+            }
+        }
+
+        // Handle footstep particles
+        if (footstepParticles != null)
+        {
+            if (isMoving)
+            {
+                if (!footstepParticles.isPlaying)
+                {
+                    footstepParticles.Play();
+                }
+            }
+            else
+            {
+                if (footstepParticles.isPlaying)
+                {
+                    footstepParticles.Stop();
                 }
             }
         }
