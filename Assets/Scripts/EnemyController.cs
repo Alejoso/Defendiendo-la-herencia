@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
     [SerializeField] private float dracuPalleteDropProbability;
-    private float dolexProbabillity = 0.06f; 
+    private float dolexProbabillity = 0.06f;
     private Rigidbody2D rb;
 
     //Player position
@@ -19,10 +19,16 @@ public class EnemyController : MonoBehaviour
 
     private PlayerController playerController;
 
+    //Pathfinding
+    [Header("Pathfinding Settings")]
+    [SerializeField] private float obstacleAvoidanceRadius = 1.5f;
+    [SerializeField] private LayerMask obstacleLayer; // Set this to your walls/obstacles layer
+    [SerializeField] private float raycastDistance = 2f;
+
     //DracuPlallete prefab
     [SerializeField] private GameObject dracuPallete;
 
-    [SerializeField] private GameObject dolex; 
+    [SerializeField] private GameObject dolex;
 
     void Awake()
     {
@@ -48,18 +54,19 @@ public class EnemyController : MonoBehaviour
 
     void Death()
     {
-        
+
         if (Random.value <= dracuPalleteDropProbability)
         {
-             Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation);
-        } else
+            Instantiate(dracuPallete, transform.position, dracuPallete.transform.rotation);
+        }
+        else
         {
-            if(Random.value <= dolexProbabillity)
+            if (Random.value <= dolexProbabillity)
             {
                 Instantiate(dolex, transform.position, dolex.transform.rotation);
             }
         }
-           
+
         Destroy(gameObject);
     }
 
@@ -78,11 +85,45 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    //Script to dumbly follow the player based on a vector that points to the player and some speed
+    //Script to follow the player with obstacle avoidance
     void FollowPlayer()
     {
-        Vector3 positionToPlayer = player.position - transform.position;
-        rb.linearVelocity = positionToPlayer.normalized * speed;
+        if (player == null) return;
+
+        Vector2 directionToPlayer = (player.position - transform.position).normalized;
+
+        // Check for obstacles in the path using raycasts
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, raycastDistance, obstacleLayer);
+
+        if (hit.collider != null)
+        {
+            // Obstacle detected - try to move around it
+            print("Obstacle detected: " + hit.collider.name);
+            Vector2 avoidanceDirection = GetAvoidanceDirection(directionToPlayer, hit.normal);
+            rb.linearVelocity = avoidanceDirection * speed;
+        }
+        else
+        {
+            // No obstacle - move directly toward player
+            rb.linearVelocity = directionToPlayer * speed;
+        }
+    }
+
+    // Calculate direction to avoid obstacle
+    Vector2 GetAvoidanceDirection(Vector2 targetDirection, Vector2 obstacleNormal)
+    {
+        // Try moving perpendicular to the obstacle
+        Vector2 right = Vector2.Perpendicular(obstacleNormal);
+        Vector2 left = -right;
+
+        // Choose the direction that's closer to the target
+        float rightDot = Vector2.Dot(right, targetDirection);
+        float leftDot = Vector2.Dot(left, targetDirection);
+
+        Vector2 avoidDir = (rightDot > leftDot) ? right : left;
+
+        // Blend with target direction for smoother movement
+        return (avoidDir + targetDirection * 0.5f).normalized;
     }
 
     void TakeDamage(int damage)

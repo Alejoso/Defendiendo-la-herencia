@@ -147,7 +147,11 @@ MonoBehaviour:
   maxHealth: 200
   health: 0
   dracuPalleteDropProbability: 0.4
-  dolexProbabillity: 0
+  obstacleAvoidanceRadius: 8
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  raycastDistance: 8
   dracuPallete: {fileID: 1010471504206957112, guid: 05967e74b99c2324084add09661294f5, type: 3}
   dolex: {fileID: 978053413663683065, guid: 14818e6c7cfc1cf4c8d2d96f186de090, type: 3}
 --- !u!114 &8486491868622131144
