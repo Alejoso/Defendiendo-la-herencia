@@ -3320,8 +3320,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4249,6 +4249,7 @@ MonoBehaviour:
   minSpawnDistance: 12
   maxSpawnDistance: 15
   playerLocationText: {fileID: 1643300775}
+  typeSpeed: 0.05
   currentWaveObject: {fileID: 474815715}
   currentObjectiveText: {fileID: 92675986}
   currentWaveText: {fileID: 499869793}
