@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Revolver Settings")]
     public GameObject bullet;
-    [SerializeField] private int maxAmmo = 30;
+    private int maxAmmo = 20;
     [SerializeField] private float timeBetweenShooting;
     [SerializeField] private GameObject bulletSpawn;
     private int currentAmmo;
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     [Header("Melee Settings")]
     [SerializeField] private GameObject meleeWeapon; // Child object with BoxCollider2D
     [SerializeField] private float meleeAttackCooldown = 0.5f;
-    [SerializeField] private float meleeLockoutTime = 8f;
+    private float meleeLockoutTime = 6f;
     private bool canMelee = true;
     private float meleeTimer;
 

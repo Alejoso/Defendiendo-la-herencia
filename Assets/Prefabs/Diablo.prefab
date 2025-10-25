@@ -325,6 +325,7 @@ MonoBehaviour:
   bloodParticleSystem: {fileID: 394303108996258125}
   deathShakeIntensity: 0.2
   deathShakeDuration: 5
+  damageParticle: {fileID: 1023703377886479849, guid: 524b974ea10a04245a790623a8d1635e, type: 3}
 --- !u!1 &1918367878471833941
 GameObject:
   m_ObjectHideFlags: 0

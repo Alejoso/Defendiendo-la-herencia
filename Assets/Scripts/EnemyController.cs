@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour
 {
     //Enemies variables
-    [SerializeField] private Slider healthBar;
     [SerializeField] private float speed;
 
     [SerializeField] private float maxHealth;
@@ -40,11 +39,15 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private GameObject dolex;
 
+    // Particles
+    [SerializeField] private GameObject damageParticle;
+
+
     void Awake()
     {
         //Organize values to the health bar slider
         health = maxHealth;
-        healthBar.value = 1;
+        //healthBar.value = 1;
 
         player = GameObject.Find("Player").GetComponent<Transform>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -88,12 +91,23 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            Destroy(collision.gameObject);
             TakeDamage(playerController.GetDamage());
+            Destroy(collision.gameObject);
+            Instantiate(
+                damageParticle,
+                transform.position,
+                transform.rotation
+            );
         }
         else if (collision.gameObject.CompareTag("MeleeHit"))
         {
             TakeDamage(playerController.GetDamage());
+            //damageParticle.transform.rotation = transform.rotation; 
+            Instantiate(
+                damageParticle,
+                transform.position,
+                transform.rotation
+            );
         }
 
     }
@@ -225,6 +239,6 @@ public class EnemyController : MonoBehaviour
 
     void UpdateSlider()
     {
-        healthBar.value = health / maxHealth;
+        //healthBar.value = health / maxHealth;
     }
 }

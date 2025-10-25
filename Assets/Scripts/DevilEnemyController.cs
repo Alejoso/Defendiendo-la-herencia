@@ -55,7 +55,9 @@ public class DevilEnemyController : MonoBehaviour
 
     private DevilEnemyController devilEnemyController;
 
-    private GameProgression gameProgression; 
+    private GameProgression gameProgression;
+
+    [SerializeField] private GameObject damageParticle;
 
     void Awake()
     {
@@ -268,10 +270,20 @@ public class DevilEnemyController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             TakeDamage(playerController.GetDamage());
+            Instantiate(
+                damageParticle,
+                transform.position,
+                transform.rotation
+            );
         }
         else if (collision.gameObject.CompareTag("MeleeHit"))
         {
             TakeDamage(playerController.GetDamage());
+            Instantiate(
+                damageParticle,
+                transform.position,
+                transform.rotation
+            );
         }
 
     }
