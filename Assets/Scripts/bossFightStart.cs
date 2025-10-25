@@ -69,7 +69,7 @@ public class bossFightStart : MonoBehaviour
             arrowLastAnimator.Play("Arrow fade");
             currentObjective.SetActive(false); 
 
-            InvokeRepeating("GenerateEnemies", 20f, 7f);
+            InvokeRepeating("GenerateEnemies", 15f, 4f);
 
             // Play boss music from this object's AudioSource
             var audioSource = GetComponent<AudioSource>();

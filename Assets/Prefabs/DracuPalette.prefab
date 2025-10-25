@@ -107,7 +107,7 @@ MonoBehaviour:
   playerTag: Player
   pickupSfx: {fileID: 8300000, guid: b93a46a57c3ec8d4895603532ff67963, type: 3}
   pickupVfx: {fileID: 0}
-  xpQuantity: 25
+  xpQuantity: 50
   dracuPaleteSpeed: 10
 --- !u!61 &2102165895825146913
 BoxCollider2D:

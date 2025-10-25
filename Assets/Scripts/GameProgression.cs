@@ -357,12 +357,39 @@ public Vector3 GenerateRandomEnemySpawn(int maxAttempts = 30)
         return spawnPosition;
     }
 
-    // ⚠️ Si no encontró nada
-    Debug.LogWarning("No se encontró una posición válida para spawnear enemigo después de varios intentos.");
-        Vector3 fallbackOffset = new Vector3(Random.Range(10f, 15f) * (Random.value > 0.5f ? 1 : -1),
-                                             Random.Range(8f, 12f) * (Random.value > 0.5f ? 1 : -1),
-                                             0);
-    return new Vector3(cam.transform.position.x + fallbackOffset.x, cam.transform.position.y + fallbackOffset.y, 0); 
+    // 🧭 Fallback seguro: fuera del viewport, pero dentro de los límites
+    Debug.LogWarning("No se encontró posición válida, usando fallback cerca del borde del mapa.");
+
+    // Tomamos el tamaño visible de la cámara
+    Camera mainCam = Camera.main;
+    Vector3 camPos = mainCam.transform.position;
+    float camHeight = 2f * mainCam.orthographicSize;
+    float camWidth = camHeight * mainCam.aspect;
+
+    // Generamos un punto justo FUERA de la vista, pero dentro de los límites del mapa
+    float offsetX = Random.Range(camWidth / 2f + 1f, camWidth / 2f + 3f);
+    float offsetY = Random.Range(camHeight / 2f + 1f, camHeight / 2f + 3f);
+
+    // Elegimos un lado aleatorio
+    Vector3 fallbackOffset = Vector3.zero;
+    int side = Random.Range(0, 4);
+    switch (side)
+    {
+        case 0: fallbackOffset = new Vector3(offsetX, 0, 0); break; // derecha
+        case 1: fallbackOffset = new Vector3(-offsetX, 0, 0); break; // izquierda
+        case 2: fallbackOffset = new Vector3(0, offsetY, 0); break; // arriba
+        case 3: fallbackOffset = new Vector3(0, -offsetY, 0); break; // abajo
+    }
+
+    Vector3 fallbackPos = camPos + fallbackOffset;
+
+    // Clampear dentro de los límites del mapa
+    fallbackPos.x = Mathf.Clamp(fallbackPos.x, -80f, 60f);
+    fallbackPos.y = Mathf.Clamp(fallbackPos.y, -30f, 60f);
+    fallbackPos.z = 0; 
+
+
+    return fallbackPos;
 }
 
 

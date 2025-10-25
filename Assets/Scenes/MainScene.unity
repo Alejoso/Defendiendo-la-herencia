@@ -4707,8 +4707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy:
-  - {fileID: 1051161168834849254, guid: b5c7bd86721dd6546a0fd79d6e53b21d, type: 3}
-  - {fileID: 1051161168834849254, guid: 52bd06e185c6def48bb31cbebe200be0, type: 3}
+  - {fileID: 1051161168834849254, guid: 4d28160c9a047ea44b267e8c9f46c8ef, type: 3}
+  - {fileID: 1051161168834849254, guid: 4ea06e003dd2f2947976fe04d96b1042, type: 3}
   bossParticleEffect: {fileID: 1041462989}
   bosslightAppear: {fileID: 1391930496}
   rainEffect: {fileID: 1442225255}

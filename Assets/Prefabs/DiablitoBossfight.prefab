@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5979279583659361085}
   - component: {fileID: 3286281906321104626}
   m_Layer: 7
-  m_Name: Diablito
+  m_Name: DiablitoBossfight
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   maxHealth: 80
   health: 0
   dracuPalleteDropProbability: 0.4
-  dolexProbabillity: 0.07
+  dolexProbabillity: 0.3
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1

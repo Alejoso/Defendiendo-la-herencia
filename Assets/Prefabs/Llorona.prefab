@@ -143,11 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723ad8a6bf6beb7438dee2c7cca0969e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
   speed: 2.5
   maxHealth: 170
   health: 0
   dracuPalleteDropProbability: 0.4
+  dolexProbabillity: 0.07
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
