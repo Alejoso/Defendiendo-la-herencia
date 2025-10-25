@@ -59,7 +59,8 @@ public class GameProgression : MonoBehaviour
 
     [SerializeField] GameObject shotgun;
 
-    [SerializeField] private Animator transition; 
+    [SerializeField] private Animator transition;
+    [SerializeField] private GameObject magnet; 
 
 
     void Awake()
@@ -88,6 +89,8 @@ public class GameProgression : MonoBehaviour
 
         shotgun.SetActive(false);
         currentWaveObject.SetActive(false);
+
+        magnet.SetActive(false); 
 
     }
 
@@ -120,7 +123,7 @@ public class GameProgression : MonoBehaviour
             }
 
             currentWaveObject.SetActive(false);
-
+            magnet.SetActive(true); 
             currentWave = 1;
             didPlayerCompleteObjective = true;
             indexKeyLocation++;
@@ -155,6 +158,7 @@ public class GameProgression : MonoBehaviour
         if (playerLocation == currentObjective && hasPlayerChangedLocation)
         {
             //Start new rounds
+            magnet.SetActive(false); 
             hasPlayerChangedLocation = false;
             arrowToObjectiveAnimator.Play("Arrow fade", 0, 0f);
             didPlayerCompleteObjective = false;

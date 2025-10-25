@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - MeleeHit
   - HitboxNotCollide
+  - Magnet
   layers:
   - Default
   - TransparentFX

@@ -21,7 +21,6 @@ public class EnemyController : MonoBehaviour
 
     //Pathfinding
     [Header("Pathfinding Settings")]
-    [SerializeField] private float obstacleAvoidanceRadius = 1.5f;
     [SerializeField] private LayerMask obstacleLayer; // Set this to your walls/obstacles layer
     [SerializeField] private float raycastDistance = 2f;
     [SerializeField] private float separationRadius = 1.0f; // Distance to keep from other enemies

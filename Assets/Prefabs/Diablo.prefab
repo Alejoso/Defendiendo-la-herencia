@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 90000/9000
+  m_text: 100000/100000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 685a6c53856995a4fb148fa23edaf624, type: 2}
   m_sharedMaterial: {fileID: -465265430874393654, guid: 685a6c53856995a4fb148fa23edaf624, type: 2}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
-  maxHealth: 25000
+  maxHealth: 100000
   health: 0
   dracuPalleteDropProbability: 0.4
   dracuPallete: {fileID: 1010471504206957112, guid: 05967e74b99c2324084add09661294f5, type: 3}

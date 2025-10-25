@@ -118,7 +118,7 @@ public class DevilEnemyController : MonoBehaviour
             Death();
         }
 
-        if (health <= 3000 && !hasNotChanged)
+        if (health <= 30000 && !hasNotChanged)
         {
             hasNotChanged = true;
             tackleInterval /= 2;

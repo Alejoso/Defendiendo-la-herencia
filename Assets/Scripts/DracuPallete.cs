@@ -1,3 +1,4 @@
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class DracuPallete : MonoBehaviour
@@ -17,11 +18,17 @@ public class DracuPallete : MonoBehaviour
     bool _collected;
 
     private GameController gameController;
+    private GameObject player;
+
+    [SerializeField] private float dracuPaleteSpeed;
+    private bool onMagnetRange; 
 
     void Awake()
     {
         _startPos = transform.position;
-        gameController = GameObject.Find("GameController").GetComponent<GameController>(); 
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        player = GameObject.Find("Player");
+        onMagnetRange = false; 
     }
 
     void OnEnable()
@@ -33,6 +40,7 @@ public class DracuPallete : MonoBehaviour
     void Update()
     {
         if (_collected) return;
+        if (onMagnetRange) return; 
 
         // Bob on the Y axis using a sine wave
         float newY = _startPos.y + Mathf.Sin((Time.time + phaseOffset) * frequency) * amplitude;
@@ -47,7 +55,7 @@ public class DracuPallete : MonoBehaviour
 
         _collected = true;
 
-        gameController.AddXp(xpQuantity); 
+        gameController.AddXp(xpQuantity);
 
         // Play VFX/SFX
         if (pickupVfx) Instantiate(pickupVfx, transform.position, Quaternion.identity);
@@ -62,5 +70,23 @@ public class DracuPallete : MonoBehaviour
         }
 
         Destroy(gameObject);
+
     }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Magnet")) return;
+
+        onMagnetRange = true; 
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            player.transform.position,
+            dracuPaleteSpeed * Time.deltaTime
+        );
+
+    }
+
+
+
+
 }

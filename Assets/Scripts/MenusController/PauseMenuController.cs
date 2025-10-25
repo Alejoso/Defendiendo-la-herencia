@@ -6,22 +6,30 @@ public class PauseMenuController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private Animator transition;
-    private Animator pauseMenuTransition; 
+    private Animator pauseMenuTransition;
     void Awake()
     {
-        pauseMenuTransition = GetComponent<Animator>(); 
+        pauseMenuTransition = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ResumeGame(); 
+        }
     }
 
     public void ResumeGame()
     {        
-        Time.timeScale = 1; 
         StartCoroutine(DisplayAnimation()); 
     }
 
     IEnumerator DisplayAnimation()
     {
         pauseMenuTransition.Play("Pause menu dissapier" , 0 , 0f);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
+        Time.timeScale = 1; 
         gameObject.SetActive(false); 
     }
     
