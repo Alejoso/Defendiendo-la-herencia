@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
             Reload();
             currentAmmo = 0;
         }
-        
+
         bulletCount.text = currentAmmo.ToString();
 
     }
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
                 // Unlock and return to revolver
                 isLockedInMelee = false;
                 currentAmmo = maxAmmo; // Reload ammo
-                isReloading = false; 
+                isReloading = false;
                 SwitchToRevolver();
             }
         }
@@ -282,11 +282,11 @@ public class PlayerController : MonoBehaviour
             // Check if out of ammo
             if (currentAmmo <= 0)
             {
-                Reload(); 
+                Reload();
             }
         }
     }
-    
+
     private void Reload()
     {
         isReloading = true;
@@ -574,6 +574,12 @@ public class PlayerController : MonoBehaviour
     {
         return damage;
 
+    }
+
+    // Public wrapper so other scripts can inflict damage on the player
+    public void ReceiveDamage(float dmg)
+    {
+        TakeDamage(dmg);
     }
 
     public void Heal(int HealAmount)

@@ -43,6 +43,15 @@ public class DevilEnemyController : MonoBehaviour
     private bool isPerformingTackle = false;
     private bool hasNotChanged = false;
 
+    [Header("Special Attack: Laser")]
+    [SerializeField] private GameObject laserObject; // object containing laserShoot and visuals (should be inactive by default)
+    [SerializeField] private float laserInterval = 12f; // seconds between laser attacks
+    [SerializeField] private float laserDuration = 3f; // how long laser stays active
+    [SerializeField] private float laserDamage = 10f; // damage applied per tick
+    [SerializeField] private float laserDamageTickInterval = 0.5f; // how often damage is applied while laser hits player
+    private float laserTimer = 0f;
+    private bool isPerformingLaser = false;
+
     //Life UI
     [SerializeField] private Image healthBar;
     [SerializeField] private TextMeshProUGUI currentHealthText;
@@ -73,20 +82,24 @@ public class DevilEnemyController : MonoBehaviour
 
         devilEnemyController = GetComponent<DevilEnemyController>();
 
-        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>();  
+        gameProgression = GameObject.Find("GameController").GetComponent<GameProgression>();
+
+        // Ensure laser object is disabled at start (if assigned)
+        if (laserObject != null)
+            laserObject.SetActive(false);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Only chase when not tackling
+        // Only chase when not tackling (movement allowed during laser)
         if (!isPerformingTackle)
         {
             FollowPlayer();
         }
 
         // Face the player (top-down 2D: rotate on Z axis only)
-        if (player != null)
+        if (player != null && !isPerformingTackle && !isPerformingLaser)
         {
             Vector2 toPlayer = player.position - transform.position;
             if (toPlayer.sqrMagnitude > 0.0001f)
@@ -96,8 +109,8 @@ public class DevilEnemyController : MonoBehaviour
             }
         }
 
-        // Tackle timing
-        if (!isPerformingTackle)
+        // Tackle timing (don't start while performing laser)
+        if (!isPerformingTackle && !isPerformingLaser)
         {
             tackleTimer += Time.deltaTime;
             if (tackleTimer >= tackleInterval)
@@ -107,12 +120,26 @@ public class DevilEnemyController : MonoBehaviour
             }
         }
 
-        // Alternate attacks every attackInterval seconds
-        attackTimer += Time.deltaTime;
-        if (attackTimer >= attackInterval)
+        // Laser timing (run only when not tackling or already performing laser)
+        if (!isPerformingTackle && !isPerformingLaser)
         {
-            PlayAlternateAttack();
-            attackTimer = 0f;
+            laserTimer += Time.deltaTime;
+            if (laserTimer >= laserInterval)
+            {
+                laserTimer = 0f;
+                StartCoroutine(LaserRoutine());
+            }
+        }
+
+        // Alternate attacks every attackInterval seconds (paused during special attacks)
+        if (!isPerformingTackle && !isPerformingLaser)
+        {
+            attackTimer += Time.deltaTime;
+            if (attackTimer >= attackInterval)
+            {
+                PlayAlternateAttack();
+                attackTimer = 0f;
+            }
         }
 
         if (health <= 0)
@@ -212,6 +239,67 @@ public class DevilEnemyController : MonoBehaviour
         isPerformingTackle = false;
     }
 
+    System.Collections.IEnumerator LaserRoutine()
+    {
+        if (laserObject == null || player == null) yield break;
+
+        // Try to get the laserShoot component for precise ray info
+        var laserComp = laserObject.GetComponent<laserShoot>();
+
+        isPerformingLaser = true;
+
+        // Activate visuals/effects
+        laserObject.SetActive(true);
+
+        float elapsed = 0f;
+        float tick = 0f;
+
+        // During the laser duration, periodically raycast along the laser and apply damage ticks when hitting the player
+        while (elapsed < laserDuration)
+        {
+            elapsed += Time.deltaTime;
+            tick += Time.deltaTime;
+
+            if (laserComp != null)
+            {
+                Vector2 origin = laserComp.GetOrigin();
+                Vector2 dir = laserComp.GetWorldDirection();
+                float maxDist = laserComp.GetMaxDistance();
+
+                RaycastHit2D hit = Physics2D.Raycast(origin, dir, maxDist);
+                if (hit.collider != null && hit.collider.CompareTag("Player") && tick >= laserDamageTickInterval)
+                {
+                    // Inflict damage on player via public API
+                    if (playerController != null)
+                        playerController.ReceiveDamage(laserDamage);
+                    tick = 0f;
+                }
+            }
+            else
+            {
+                // Fallback: simple ray from enemy to player
+                Vector2 origin = rb.position;
+                Vector2 dirToPlayer = ((Vector2)player.position - origin).normalized;
+                float dist = Vector2.Distance(origin, player.position);
+                RaycastHit2D hit = Physics2D.Raycast(origin, dirToPlayer, dist);
+                if (hit.collider != null && hit.collider.CompareTag("Player") && tick >= laserDamageTickInterval)
+                {
+                    if (playerController != null)
+                        playerController.ReceiveDamage(laserDamage);
+                    tick = 0f;
+                }
+            }
+
+            yield return null;
+        }
+
+        // Deactivate visuals/effects
+        laserObject.SetActive(false);
+
+        // Allow behavior again
+        isPerformingLaser = false;
+    }
+
     void Death()
     {
         if (isDying) return; // Prevent multiple calls
@@ -231,7 +319,7 @@ public class DevilEnemyController : MonoBehaviour
             bloodParticleSystem.Play();
         }
 
-        devilEnemyController.enabled = false; 
+        devilEnemyController.enabled = false;
 
         // Drop loot
         if (Random.value <= dracuPalleteDropProbability)
@@ -260,7 +348,7 @@ public class DevilEnemyController : MonoBehaviour
         transform.position = originalPosition;
 
         // Load WinScene
-        gameProgression.LoadWinScene(); 
+        gameProgression.LoadWinScene();
     }
 
     //When it collides with a bullet do..
@@ -297,7 +385,7 @@ public class DevilEnemyController : MonoBehaviour
 
     void TakeDamage(int damage)
     {
-        if ((health -= damage) <= 0) return; 
+        if ((health -= damage) <= 0) return;
         health -= damage;
         UpdateSlider();
     }
