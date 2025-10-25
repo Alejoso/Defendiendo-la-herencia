@@ -106,7 +106,7 @@ MonoBehaviour:
   phaseOffset: 0
   playerTag: Player
   pickupSfx: {fileID: 8300000, guid: b93a46a57c3ec8d4895603532ff67963, type: 3}
-  pickupVfx: {fileID: 0}
+  pickupVfx: {fileID: 1023703377886479849, guid: 3e6f66484dca0d74d9ff62e7c22f9343, type: 3}
   xpQuantity: 50
   dracuPaleteSpeed: 10
 --- !u!61 &2102165895825146913

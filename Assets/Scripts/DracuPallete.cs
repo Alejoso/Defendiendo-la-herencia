@@ -67,7 +67,7 @@ public class DracuPallete : MonoBehaviour
             }
             playerAudio.PlayOneShot(pickupSfx);
         }
-
+        Instantiate(pickupVfx, transform.position, pickupVfx.transform.rotation); 
         Destroy(gameObject);
 
     }

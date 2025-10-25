@@ -60,7 +60,7 @@ public class Dolex : MonoBehaviour
             }
             playerAudio.PlayOneShot(pickupSfx);
         }
-
+        Instantiate(pickupVfx, transform.position, pickupVfx.transform.rotation); 
         Destroy(gameObject);
     }
 }
