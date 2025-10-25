@@ -51,6 +51,9 @@ public class DevilEnemyController : MonoBehaviour
     [SerializeField] private float laserDamageTickInterval = 0.5f; // how often damage is applied while laser hits player
     private float laserTimer = 0f;
     private bool isPerformingLaser = false;
+    // Camera shake during laser
+    [Header("Camera Shake")]
+    [SerializeField] private float laserShakeIntensity = 0.15f;
 
     //Life UI
     [SerializeField] private Image healthBar;
@@ -65,6 +68,10 @@ public class DevilEnemyController : MonoBehaviour
     private DevilEnemyController devilEnemyController;
 
     private GameProgression gameProgression;
+
+    // Camera references for shaking
+    private Camera mainCamera;
+    private MonoBehaviour cameraController;
 
     [SerializeField] private GameObject damageParticle;
 
@@ -87,6 +94,18 @@ public class DevilEnemyController : MonoBehaviour
         // Ensure laser object is disabled at start (if assigned)
         if (laserObject != null)
             laserObject.SetActive(false);
+
+        // Cache main camera and its CameraController (if present) so we can shake it during attacks
+        if (Camera.main != null)
+        {
+            mainCamera = Camera.main;
+            cameraController = mainCamera.GetComponent("CameraController") as MonoBehaviour;
+            if (cameraController == null)
+            {
+                // It's fine if there's no CameraController; we'll still do a simple shake.
+                // Debug.Log("No CameraController found on main camera — shake will proceed without disabling controller.");
+            }
+        }
     }
 
     // Update is called once per frame
@@ -124,7 +143,7 @@ public class DevilEnemyController : MonoBehaviour
         if (!isPerformingTackle && !isPerformingLaser)
         {
             laserTimer += Time.deltaTime;
-            if (laserTimer >= laserInterval)
+            if ((laserTimer >= laserInterval) && health <= maxHealth / 2)
             {
                 laserTimer = 0f;
                 StartCoroutine(LaserRoutine());
@@ -251,6 +270,9 @@ public class DevilEnemyController : MonoBehaviour
         // Activate visuals/effects
         laserObject.SetActive(true);
 
+        // Start camera shake coroutine in parallel with the laser
+        StartCoroutine(ShakeCameraDuringLaser(laserDuration));
+
         float elapsed = 0f;
         float tick = 0f;
 
@@ -298,6 +320,40 @@ public class DevilEnemyController : MonoBehaviour
 
         // Allow behavior again
         isPerformingLaser = false;
+    }
+
+    // Shake the main camera for the duration of the laser. Disables CameraController if present to avoid conflicts.
+    private System.Collections.IEnumerator ShakeCameraDuringLaser(float duration)
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+            if (mainCamera == null) yield break;
+            if (cameraController == null)
+                cameraController = mainCamera.GetComponent("CameraController") as MonoBehaviour;
+        }
+
+        // Optionally disable CameraController while we shake so it doesn't overwrite positions
+        if (cameraController != null)
+            cameraController.enabled = false;
+
+        Vector3 originalPosition = mainCamera.transform.localPosition;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * laserShakeIntensity;
+            float y = Random.Range(-1f, 1f) * laserShakeIntensity;
+            mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3(x, y, 0f);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Restore
+        if (mainCamera != null)
+            mainCamera.transform.localPosition = originalPosition;
+
+        if (cameraController != null)
+            cameraController.enabled = true;
     }
 
     void Death()

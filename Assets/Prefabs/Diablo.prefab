@@ -323,9 +323,10 @@ MonoBehaviour:
   tackleStateName: Tackle
   laserObject: {fileID: 4374318583397126694}
   laserInterval: 12
-  laserDuration: 3
+  laserDuration: 1.5
   laserDamage: 10
   laserDamageTickInterval: 0.5
+  laserShakeIntensity: 0.15
   healthBar: {fileID: 5305255157429995002}
   currentHealthText: {fileID: 1279801226599845778}
   bloodParticleSystem: {fileID: 394303108996258125}
