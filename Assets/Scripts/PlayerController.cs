@@ -552,6 +552,7 @@ public class PlayerController : MonoBehaviour
     {
         maxHealth += healthToAdd;
         currentHealth += healthToAdd;
+        healthBar.value = currentHealth / maxHealth;
         healthText.text = currentHealth + "/" + maxHealth;
 
     }

@@ -310,36 +310,61 @@ public class GameProgression : MonoBehaviour
     }
 
     //Generate enemies on a circle around the player
-    public Vector3 GenerateRandomEnemySpawn()
+public Vector3 GenerateRandomEnemySpawn(int maxAttempts = 30)
+{
+    int attempts = 0;
+
+    while (attempts < maxAttempts)
     {
-        //Generate random values
-        float angle = Random.Range(0f, 360f) * Mathf.Rad2Deg;
-        float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
+        // Copiamos las distancias originales
+        float currentMin = minSpawnDistance;
+        float currentMax = maxSpawnDistance;
 
-        //Calculate the circular spawn position between those boundaries
+        // Si estamos en los últimos 10 intentos, aumentar el rango
+        if (attempts >= maxAttempts - 10)
+        {
+            int extra = attempts - (maxAttempts - 10); // de 0 a 9
+            currentMin += extra * 1f;
+            currentMax += extra * 1f;
+        }
+
+        // Generar valores aleatorios
+        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float distance = Random.Range(currentMin, currentMax);
+
+        // Calcular posición circular entre los límites
         Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-
-        //Get the random spawn position
         Vector3 cameraPosition = cam.transform.position;
         Vector3 spawnPosition = new Vector3(cameraPosition.x + offset.x, cameraPosition.y + offset.y, 0);
 
         Collider2D hit = Physics2D.OverlapCircle(spawnPosition, 0.5f);
 
-        //Prevent enemies from spwning out of bounds and from spawning inside an object
+        // Verificar límites del mapa
         if (spawnPosition.x > 60f || spawnPosition.x < -80f || spawnPosition.y > 60f || spawnPosition.y < -30f)
         {
-            return GenerateRandomEnemySpawn();
+            attempts++;
+            continue;
         }
 
+        // Verificar colisión
         if (hit)
         {
-            return GenerateRandomEnemySpawn();
-        } else
-        {
-            return spawnPosition;
+            attempts++;
+            continue;
         }
 
+        // ✅ Encontró posición válida
+        return spawnPosition;
     }
+
+    // ⚠️ Si no encontró nada
+    Debug.LogWarning("No se encontró una posición válida para spawnear enemigo después de varios intentos.");
+        Vector3 fallbackOffset = new Vector3(Random.Range(10f, 15f) * (Random.value > 0.5f ? 1 : -1),
+                                             Random.Range(8f, 12f) * (Random.value > 0.5f ? 1 : -1),
+                                             0);
+    return new Vector3(cam.transform.position.x + fallbackOffset.x, cam.transform.position.y + fallbackOffset.y, 0); 
+}
+
 
     void ShootgunAppear()
     {
